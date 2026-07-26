@@ -2,3 +2,10 @@ title: Astrostatistics Interest Group
 description: American Statistical Association
 theme: jekyll-theme-cayman
 logo: /images/logo.png
+
+# This fork is served as a GitHub Pages *project* page, at
+#   https://pvl19.github.io/aigamstat.github.io/
+# rather than from a custom domain at the site root. Both settings below must
+# match the repo they are deployed from -- see README.md before changing them.
+baseurl: /aigamstat.github.io
+repository: pvl19/aigamstat.github.io
