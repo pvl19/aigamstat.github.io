@@ -3,15 +3,11 @@ layout: default
 ---
 
 
-<a href="../index.html" class="btn">Home</a>
-<a href="../about_us.html" class="btn">About Us</a>
-<a href="../join.html" class="btn">Join AIG</a>
-<a href="../news.html" class="btn">News</a>
-<a href="../competition/" class="btn">Competitions</a>
-<a href="../jsm2020/index.html" class="btn">JSM 2020</a>
-<a href="https://ww2.amstat.org/meetings/jsm/2021/" class="btn">[JSM 2021]</a>
 
 ---
+
+**Official meeting site: [JSM 2021](https://ww2.amstat.org/meetings/jsm/2021/)**
+
 ### Aug 7-12, 2021
 
 # AIG Community Table

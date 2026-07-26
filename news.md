@@ -2,14 +2,8 @@
 layout: default
 ---
 
-<a href="./index.html" class="btn">Home</a>
-<a href="./about_us.html" class="btn">About Us</a>
 <!--
-<a href="./news.html" class="btn">News</a>
 -->
-<a href="./jsm2021/" class="btn">JSM 2021</a>
-<a href="./competition/" class="btn">Competitions</a>
-<a href="./join.html" class="btn">Join Us</a>
 
 
 # Latest News 
@@ -72,5 +66,5 @@ We are excited to announce the finalists of the 2<sup>nd</sup> Annual [Student P
 
 # 2019 Student Paper Competition
 ### July 30, 2019
-[Winners of the 2019 Student Paper Competition](./competition/winners.html)
+[Winners of the 2019 Student Paper Competition](./competition/winners/2019.html)
 > We are happy to (finally) announce both the finalists and winner of the 2019 Student paper competition. The finalists were Axel Widmark, Francesca Capel, Daniel Muthukrishna and Xixi Yu. They were invited to presented their work at JSM 2019 in Denver, CO. There it was announced that the winner of the $500 cash prize was Axel Widmark. Congratulations to everyone!

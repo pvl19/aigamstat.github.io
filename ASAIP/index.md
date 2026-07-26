@@ -2,12 +2,6 @@
 layout: default
 ---
 
-<a href="./index.html" class="btn">ASAIP Home</a>
-<a href="../index.html" class="btn">ASA/AIG</a>
-<a href="./jobs.html" class="btn">Jobs</a>
-<a href="./conf.html" class="btn">Conferences</a>
-<a href="./talks.html" class="btn">Talks</a>
-<a href="./index.html#contact" class="btn">Contact</a>
 
 # ASAIP
 
@@ -20,3 +14,12 @@ Have a related job, conference, or talk that you would like to advertise? Reach 
 # [Upcoming Conferences](./conf.html)
 
 # [Upcoming Talks](./talks.html)
+
+# Articles
+
+Introductory and reference articles carried over from the original ASAIP.
+
+- [Astrostatistics in a Nutshell](./Articles/Astrostat_nutshell.html)
+- [Astroinformatics in a Nutshell](./Articles/Astroinfo_nutshell.html)
+- [Beware the Kolmogorov-Smirnov test!](./Articles/Beware_KStest.html)
+- [Some Aspects of Measurement Error in Linear Regression of Astronomical Data](./Articles/Measurement_error.html)

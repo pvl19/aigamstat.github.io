@@ -17,7 +17,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <!-- Deliberately NOT named style.css -- see the note in _config.yml. -->
+    <link rel="stylesheet" href="{{ '/assets/css/aig.css?v=' | append: site.github.build_revision | relative_url }}">
   </head>
   <body>
     <!-- <a id="skip-to-content" href="#content">Skip to the content.</a> -->
@@ -28,9 +29,91 @@
     </header>
 
     <main id="content" class="main-content" role="main">
+
+      {%- comment -%}
+        Site navigation lives here and ONLY here -- do not paste nav buttons
+        into individual pages. The second row is chosen from the page's URL,
+        so a new page picks up the right section nav automatically just by
+        living in the right directory. See README.md.
+      {%- endcomment -%}
+
+      {%- assign u = page.url -%}
+      {%- if u contains '/jsm' -%}
+        {%- assign section = 'jsm' -%}
+      {%- elsif u contains '/competition' -%}
+        {%- assign section = 'competition' -%}
+      {%- elsif u contains '/ASAIP' -%}
+        {%- assign section = 'asaip' -%}
+      {%- elsif u contains '/Library' -%}
+        {%- assign section = 'asaip' -%}
+      {%- endif -%}
+
+      {%- comment -%}
+        The newest entry in jsm_years is treated as the current meeting: it is
+        where the global "JSM" button points and the only year shown outside the
+        dropdown. Adding a year to the front of the list is all that is needed.
+      {%- endcomment -%}
+      {%- assign jsm_current = site.jsm_years | first -%}
+
+      <nav class="site-nav" role="navigation" aria-label="Main">
+        <a href="{{ '/' | relative_url }}" class="btn{% if u == '/' %} current{% endif %}">Home</a>
+        <a href="{{ '/about_us.html' | relative_url }}" class="btn{% if u contains '/about_us' %} current{% endif %}">About Us</a>
+        <a href="{{ '/join.html' | relative_url }}" class="btn{% if u contains '/join' %} current{% endif %}">Join AIG</a>
+        <a href="{{ '/competition/' | relative_url }}" class="btn{% if section == 'competition' %} current{% endif %}">Student Paper Competition</a>
+        <a href="{{ '/jsm' | append: jsm_current | append: '/' | relative_url }}" class="btn{% if section == 'jsm' %} current{% endif %}">JSM</a>
+        <a href="{{ '/ASAIP/' | relative_url }}" class="btn{% if section == 'asaip' %} current{% endif %}">ASAIP</a>
+        <a href="{{ '/news.html' | relative_url }}" class="btn{% if u contains '/news' %} current{% endif %}">News</a>
+      </nav>
+
+      {%- if section == 'jsm' -%}
+      <nav class="section-nav" role="navigation" aria-label="JSM">
+        <a href="{{ '/jsm' | append: jsm_current | append: '/' | relative_url }}" class="btn{% if u contains jsm_current %} current{% endif %}">JSM {{ jsm_current }}</a>
+        {%- assign jyr = nil -%}
+        {%- for yr in site.jsm_years -%}{%- unless forloop.first -%}{%- if u contains yr -%}{%- assign jyr = yr -%}{%- endif -%}{%- endunless -%}{%- endfor -%}
+        <details class="nav-dropdown">
+          <summary class="btn{% if jyr %} current{% endif %}">Past Years{% if jyr %}: {{ jyr }}{% endif %}</summary>
+          <div class="nav-dropdown-menu">
+            {%- for yr in site.jsm_years -%}{%- unless forloop.first -%}
+            <a href="{{ '/jsm' | append: yr | append: '/' | relative_url }}" class="btn{% if u contains yr %} current{% endif %}">JSM {{ yr }}</a>
+            {%- endunless -%}{%- endfor -%}
+          </div>
+        </details>
+      </nav>
+      {%- elsif section == 'competition' -%}
+      <nav class="section-nav" role="navigation" aria-label="Competition">
+        <a href="{{ '/competition/' | relative_url }}" class="btn{% if u == '/competition/' %} current{% endif %}">2026 Competition</a>
+        {%- comment -%}
+          <details> gives a keyboard-accessible, touch-friendly dropdown with no
+          JavaScript. It stays closed so it never covers the page heading; the
+          year you are on is shown in the label instead.
+        {%- endcomment -%}
+        {%- assign wyr = nil -%}
+        {%- for yr in site.winner_years -%}{%- if u contains yr -%}{%- assign wyr = yr -%}{%- endif -%}{%- endfor -%}
+        <details class="nav-dropdown">
+          <summary class="btn{% if u contains '/winners' %} current{% endif %}">Previous Winners{% if wyr %}: {{ wyr }}{% endif %}</summary>
+          <div class="nav-dropdown-menu">
+            <a href="{{ '/competition/winners/' | relative_url }}" class="btn{% if u == '/competition/winners/' %} current{% endif %}">All years</a>
+            {%- for yr in site.winner_years -%}
+            <a href="{{ '/competition/winners/' | append: yr | append: '.html' | relative_url }}" class="btn{% if u contains yr %} current{% endif %}">{{ yr }}</a>
+            {%- endfor -%}
+          </div>
+        </details>
+      </nav>
+      {%- elsif section == 'asaip' -%}
+      <nav class="section-nav" role="navigation" aria-label="ASAIP">
+        <a href="{{ '/ASAIP/' | relative_url }}" class="btn{% if u == '/ASAIP/' %} current{% endif %}">ASAIP Home</a>
+        <a href="{{ '/ASAIP/jobs.html' | relative_url }}" class="btn{% if u contains 'jobs' %} current{% endif %}">Jobs</a>
+        <a href="{{ '/ASAIP/conf.html' | relative_url }}" class="btn{% if u contains 'conf' %} current{% endif %}">Conferences</a>
+        <a href="{{ '/ASAIP/talks.html' | relative_url }}" class="btn{% if u contains 'talks' %} current{% endif %}">Talks</a>
+        <a href="{{ '/Library/library.html' | relative_url }}" class="btn{% if u contains '/Library' %} current{% endif %}">Library</a>
+        <a href="{{ '/ASAIP/index.html#contact' | relative_url }}" class="btn">Contact</a>
+      </nav>
+      {%- endif -%}
+
       {{ content }}
 
       <footer class="site-footer">
+        <span class="site-footer-owner">A special interest group of the <a href="https://www.amstat.org">American Statistical Association</a>.</span>
         {% if site.github.is_project_page %}
           <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
         {% endif %}

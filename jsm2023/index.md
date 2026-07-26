@@ -3,16 +3,10 @@ layout: default
 ---
 
 
-<a href="../index.html" class="btn">Home</a>
-<a href="../about_us.html" class="btn">About Us</a>
-<a href="../join.html" class="btn">Join AIG</a>
-<a href="../news.html" class="btn">News</a>
-<a href="../competition/" class="btn">Competitions</a>
-<a href="https://ww2.amstat.org/meetings/jsm/2022/" class="btn">[JSM 2023]</a>
 
 ---
 
-Past events: [JSM 2022](https://astrostat.org/jsm2022/index.html), [JSM 2021](https://astrostat.org/jsm2021/index.html), [JSM 2020](https://astrostat.org/jsm2020/index.html)
+**Official meeting site: [JSM 2023](https://ww2.amstat.org/meetings/jsm/2023/)**
 
 ---
 

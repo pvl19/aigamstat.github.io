@@ -4,13 +4,6 @@ layout: default
 
 
 
-<a href="./about_us.html" class="btn">About Us</a>
-<a href="./join.html" class="btn">Join AIG</a>
-<a href="./competition/" class="btn">Competitions</a>
-<a href="./news.html" class="btn">News</a>
-<a href="./jsm2024/index.html" class="btn">JSM</a>
-<a href="./ASAIP/index.html" class="btn">ASAIP</a>
-<a href="https://www.amstat.org" class="btn">[ASA]</a>
 
 ![AIG @JSM 2022](./images/jsm_astrostat_meeting_2022.jpg)
 <p style="text-align: center;">Astrostatistics Interest Group at JSM 2022, Washington, DC </p>
@@ -25,7 +18,7 @@ layout: default
 ## 2025 Student Paper Competition
 #### Dec 6th, 2024
 ### Application deadline: Friday, December 13, 2024 at 11:59 pm EST
-The AIG is pleased to announce that the 2025 Student Paper Competition is now open for submissions! If you have submitted a paper either on or after December 13, 2023, related to the development and/or application of statistical methods to problems in astronomy, astrophysics, or cosmology, you may be eligible to enter! The winner and up to four additional finalists will receive cash prizes and present their work at JSM 2025 in Nashville, Tennessee, USA. Please see the <a href="./competition/">Competitions</a> page for additional details on eligibility and submission requirements. A collection of previous winners can be found [here](./competition/winners.html). **We strongly encourage students from groups underrepresented in statistics and/or astronomy to apply!**
+The AIG is pleased to announce that the 2025 Student Paper Competition is now open for submissions! If you have submitted a paper either on or after December 13, 2023, related to the development and/or application of statistical methods to problems in astronomy, astrophysics, or cosmology, you may be eligible to enter! The winner and up to four additional finalists will receive cash prizes and present their work at JSM 2025 in Nashville, Tennessee, USA. Please see the <a href="./competition/">Competitions</a> page for additional details on eligibility and submission requirements. A collection of previous winners can be found [here](./competition/winners/). **We strongly encourage students from groups underrepresented in statistics and/or astronomy to apply!**
 
 ## Finalists of the 2024 Student Paper Competition
 #### Oct 17, 2024
@@ -41,7 +34,7 @@ Three astrostatistics sessions will run during [JSM 2024](./jsm2024/index.html).
 ## 2024 Student Paper Competition
 #### Nov 9, 2023
 ### Application deadline: Tuesday, December 12, 2023 at 11:59 pm EST
-The AIG is pleased to announce that the 2024 Student Paper Competition is now open for submissions! If you have submitted a paper either on or after December 6, 2022, related to the development and/or application of statistical methods to problems in astronomy, astrophysics, or cosmology, you may be eligible to enter! The winner and up to four additional finalists will receive cash prizes and present their work at JSM 2024 in Portland, Oregon, USA. Please see the <a href="./competition/">Competitions</a> page for additional details on eligibility and submission requirements. A collection of previous winners can be found [here](./competition/winners.html). **We strongly encourage students from groups underrepresented in statistics and/or astronomy to apply!**
+The AIG is pleased to announce that the 2024 Student Paper Competition is now open for submissions! If you have submitted a paper either on or after December 6, 2022, related to the development and/or application of statistical methods to problems in astronomy, astrophysics, or cosmology, you may be eligible to enter! The winner and up to four additional finalists will receive cash prizes and present their work at JSM 2024 in Portland, Oregon, USA. Please see the <a href="./competition/">Competitions</a> page for additional details on eligibility and submission requirements. A collection of previous winners can be found [here](./competition/winners/). **We strongly encourage students from groups underrepresented in statistics and/or astronomy to apply!**
 
 **An information session was held online at 11:00 a.m. Eastern Time (US and Canada) on Nov 17, 2023. A recording of the session can be found [here](https://utoronto.zoom.us/rec/play/GRMoxjcnpJiChZx9-0VobNSjHSCeuuLsmzECI50_CWhhfv1tLgUeusZR9Mq9JM0I-mOVNmlApVrCatdP.7NRO38Q_NE1d5FYs?canPlayFromShare=true&from=my_recording&continueMode=true&componentName=rec-play&originRequestUrl=https%3A%2F%2Futoronto.zoom.us%2Frec%2Fshare%2FKXEbTK_jktrdGObmt56TO37iGBx3rMGS-rK5kSnwZSoF2ZHmC-RiZtwutiyISdf7.Xy_UtjanysY-Qx2-%3FstartTime%3D1700236537000%2520Passcode%3A%2520c5U%25KryQpC).**
 

@@ -266,6 +266,46 @@ a:hover { text-decoration: underline; }
 @media screen and (max-width: 42em) { .btn { display: block; width: 100%; padding: 0.75rem; font-size: 0.9rem; }
   .btn + .btn { margin-top: 1rem; margin-left: 0; } }
 
+/* Site navigation. Two rows: .site-nav is global, .section-nav is the
+   per-section row. Markup lives in _layouts/default.html -- not in pages. */
+.site-nav, .section-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.site-nav .btn, .section-nav .btn { margin-bottom: 0; }
+.site-nav .btn + .btn, .section-nav .btn + .btn { margin-left: 0; }
+.site-nav { margin-bottom: 0.5rem; }
+/* Sized so all seven top-level items fit one line at desktop widths, including
+   when the longest ("Student Paper Competition") is bolded as the current page. */
+.site-nav .btn { padding: 0.6rem 0.85rem; font-size: 0.95rem; }
+.section-nav { margin-bottom: 1.5rem; padding-top: 0.6rem; border-top: 1px solid #eff0f1; }
+.section-nav .btn { padding: 0.4rem 0.7rem; font-size: 0.85rem; background-color: rgba(50, 100, 130, 0.05); }
+.btn.current { font-weight: 600; color: #fff; background-color: #159957; border-color: #159957; }
+.btn.current:hover { color: #fff; background-color: #128048; }
+
+/* "Previous Winners" dropdown, built on <details>/<summary>. */
+.nav-dropdown { position: relative; }
+.nav-dropdown > summary { display: inline-block; padding: 0.4rem 0.7rem; font-size: 0.85rem; list-style: none; cursor: pointer; }
+.nav-dropdown > summary::-webkit-details-marker { display: none; }
+.nav-dropdown > summary::after { content: " \25BE"; }
+.nav-dropdown[open] > summary::after { content: " \25B4"; }
+.nav-dropdown-menu { position: absolute; z-index: 20; display: flex; flex-direction: column; gap: 0.25rem; min-width: 100%; padding: 0.4rem; margin-top: 0.3rem; background-color: #fff; border: 1px solid #dce6f0; border-radius: 0.3rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12); }
+.nav-dropdown-menu .btn { padding: 0.35rem 0.7rem; margin-bottom: 0; font-size: 0.85rem; text-align: left; white-space: nowrap; }
+.nav-dropdown-menu .btn + .btn { margin-top: 0; margin-left: 0; }
+
+/* On narrow screens an absolutely positioned menu can overflow the viewport,
+   so let it flow inline and push the page down instead. */
+@media screen and (max-width: 42em) {
+  .nav-dropdown { width: 100%; }
+  .nav-dropdown-menu { position: static; flex-direction: row; flex-wrap: wrap; box-shadow: none; }
+  .nav-dropdown-menu .btn { display: inline-block; width: auto; }
+}
+
+/* The stacked full-width buttons above are unusable with a 7-item nav, so
+   navigation buttons stay inline and wrap instead. */
+@media screen and (max-width: 42em) {
+  .site-nav .btn, .section-nav .btn { display: inline-block; width: auto; padding: 0.5rem 0.7rem; font-size: 0.85rem; }
+  .site-nav .btn + .btn, .section-nav .btn + .btn { margin-top: 0; }
+  .section-nav .btn { padding: 0.35rem 0.6rem; font-size: 0.8rem; }
+}
+
 .page-header { color: #fff; 
 	text-align: center; 
 	background-color: #fff; 
