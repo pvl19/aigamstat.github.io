@@ -47,7 +47,12 @@ export default function SectionNav({ url }: { url: string }) {
     const active = years.find((y) => url.includes(y));
     return (
       <Row label="Student Paper Competition sections">
-        <Item label="Current Competition" url="/competition/" current={url === '/competition/'} />
+        <Item
+          label="2026 Finalists"
+          url="/competition/nominees.html"
+          current={url.includes('/nominees')}
+        />
+        <Item label="2026 Competition (closed)" url="/competition/" current={url === '/competition/'} />
         <YearDropdown
           label="Previous Winners"
           activeYear={active}

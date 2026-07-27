@@ -127,6 +127,31 @@ build time, so you do not need to write them:
 Create the Markdown file, then add a matching route under `app/`. Routes are
 three lines — copy `app/join/page.tsx` and change the two constants.
 
+### Session cards
+
+A listing page can render its `###` sections as a grid of cards instead of a run
+of headings — the JSM 2026 page does. Mark the heading they sit under, and give
+any section that should stand out a style:
+
+```markdown
+## Astrostatistics sessions at JSM {: .cards}
+
+### Astrostatistics Interest Group: Student Paper Award {: .featured}
+### AIG Business Meeting {: .meeting}
+### Contributed Poster Presentations                      <- plain card
+```
+
+`{: .x}` is kramdown's inline attribute list, the syntax this content already
+used under Jekyll. Anything above the first `###` renders normally and appears
+before the grid. Within a card: the `###` is the title, each paragraph is a
+detail line (time, room, organisers), and list items are the talks, with any
+nested item beneath them treated as the presenter.
+
+Two columns from 640px up, one below. `.featured` spans the full width. A page
+without `{: .cards}` is unaffected, so the older JSM pages render as before.
+Styling lives in the session-card block of [`app/globals.css`](app/globals.css);
+the transform is [`lib/sessionCards.ts`](lib/sessionCards.ts).
+
 ### Adding a year
 
 Just add the file. Navigation menus are built by reading `content/`, so:

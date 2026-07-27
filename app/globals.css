@@ -247,6 +247,16 @@ html {
   color: var(--color-slate-500);
 }
 
+/* Bold-italic inside a list item is this site's convention for the title of a
+   work -- the finalists' papers on the Student Paper Competition page. Rendered
+   in brand blue (7.48:1 on white) to separate the paper from its authors.
+   Scoped to list items so the bold-italic strapline on the home page, which is
+   a top-level paragraph, is unaffected. */
+.prose li em > strong,
+.prose li strong > em {
+  color: var(--color-brand-blue-dark);
+}
+
 /* ---------------------------------------------------------------------------
    Home page group photo. The source is 1280x960 with the people low in the
    frame, so it is shown at half height anchored near the bottom. This crops
@@ -258,6 +268,160 @@ html {
   object-fit: cover;
   object-position: center 95%;
   border-radius: 0.75rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Session cards (see lib/sessionCards.ts).
+
+   Selectors are scoped with .prose so they beat the generic .prose h3 / p / ul
+   rules above on specificity rather than on source order.
+--------------------------------------------------------------------------- */
+.prose .session-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  /* Cards take their content's height. Without this a short card is stretched
+     to match the tallest in its row, which leaves a large empty block of fill
+     colour on the solid variants. */
+  align-items: start;
+}
+
+@media (min-width: 640px) {
+  .prose .session-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* The flagship session carries a full programme, so it takes the full row. */
+  .prose .session-card--featured {
+    grid-column: 1 / -1;
+  }
+}
+
+.prose .session-card {
+  padding: 1.25rem;
+  background: var(--color-slate-50);
+  border: 1px solid var(--color-slate-200);
+  border-radius: 0.85rem;
+}
+
+.prose .session-card > :first-child {
+  margin-top: 0;
+}
+
+/* Title */
+.prose .session-card h3 {
+  margin: 0 0 0.7rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-slate-900);
+}
+
+/* When, where, and any one-line note. */
+.prose .session-card p {
+  margin: 0.3rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-slate-600);
+}
+
+/* Titles of the talks within a session. */
+.prose .session-card ul {
+  margin: 0.9rem 0 0;
+  padding-left: 1.15rem;
+  list-style: disc;
+}
+
+.prose .session-card li {
+  font-size: 0.9rem;
+  color: var(--color-slate-800);
+}
+
+.prose .session-card li + li {
+  margin-top: 0.5rem;
+}
+
+/* Presenters, nested under each talk: no bullet, quieter than the title. */
+.prose .session-card ul ul {
+  margin-top: 0.2rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.prose .session-card ul ul li {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--color-slate-600);
+}
+
+/* --- Solid variants. White on both fills clears AA: 7.48:1 on brand-blue-dark
+       and 5.09:1 on brand-green-dark. --------------------------------------- */
+.prose .session-card--featured {
+  background: var(--color-brand-blue-dark);
+  border-color: var(--color-brand-blue-dark);
+}
+
+.prose .session-card--meeting {
+  background: var(--color-brand-green-dark);
+  border-color: var(--color-brand-green-dark);
+}
+
+.prose .session-card--featured h3,
+.prose .session-card--meeting h3,
+.prose .session-card--featured li,
+.prose .session-card--meeting li {
+  color: #fff;
+}
+
+/* 95%, not the 90% this started at: over brand-green-dark the quieter text
+   measured 4.47:1, just under the 4.5:1 minimum. 95% gives 4.78:1. */
+.prose .session-card--featured p,
+.prose .session-card--meeting p,
+.prose .session-card--featured ul ul li,
+.prose .session-card--meeting ul ul li {
+  color: rgb(255 255 255 / 0.95);
+}
+
+.prose .session-card--featured a,
+.prose .session-card--meeting a,
+.prose .session-card--banner a {
+  color: #fff;
+}
+
+.prose .session-card--featured a:hover,
+.prose .session-card--meeting a:hover,
+.prose .session-card--banner a:hover {
+  color: rgb(255 255 255 / 0.8);
+}
+
+/* --- Banner: a thin full-width strip, centred. A pale wash of brand-blue with
+       dark blue text rather than a solid fill, so it sits lighter than the
+       session cards instead of shouting over them. Text measures 5.95:1. ---- */
+.prose .session-card--banner {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.15rem 0.6rem;
+  padding: 0.7rem 1.25rem;
+  background: color-mix(in srgb, var(--color-brand-blue) 18%, white);
+  border-color: color-mix(in srgb, var(--color-brand-blue) 32%, white);
+}
+
+.prose .session-card--banner h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-brand-blue-dark);
+}
+
+.prose .session-card--banner p {
+  margin: 0;
+  color: var(--color-brand-blue-dark);
+}
+
+.prose .session-card--banner a {
+  color: var(--color-brand-blue-dark);
 }
 
 /* Must come last: the first block on a page never carries a top margin,

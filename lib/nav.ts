@@ -80,7 +80,13 @@ export function mainNav(): NavItem[] {
     { label: 'JSM 2026', url: `/jsm${currentJsmYear()}/`, section: 'jsm' },
     { label: 'Officers', url: '/about/officers/', section: 'officers' },
     { label: 'Charter', url: '/about/charter.html', section: 'charter' },
-    { label: 'Student Paper Competition', url: '/competition/', section: 'competition' },
+    // Points at the first item of the section row, not at /competition/, so the
+    // tab opens on whatever that row shows first.
+    {
+      label: 'Student Paper Competition',
+      url: '/competition/nominees.html',
+      section: 'competition',
+    },
     { label: 'News', url: '/news.html', section: 'news' },
     { label: 'Contact', url: '/contact.html', section: 'contact' },
   ];

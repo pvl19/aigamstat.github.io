@@ -96,5 +96,9 @@ export type Page = { html: string; title: string | null };
 /** Load and render one content file. */
 export async function loadPage(contentPath: string): Promise<Page> {
   const md = readContent(contentPath);
-  return { html: await renderMarkdown(md), title: firstHeading(md) };
+  // Imported here rather than at the top: sessionCards imports renderMarkdown
+  // from this module, and a static import both ways is a cycle.
+  const { wantsSessionCards, renderWithSessionCards } = await import('./sessionCards');
+  const html = wantsSessionCards(md) ? await renderWithSessionCards(md) : await renderMarkdown(md);
+  return { html, title: firstHeading(md) };
 }
