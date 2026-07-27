@@ -280,6 +280,12 @@ a:hover { text-decoration: underline; }
 .btn.current { font-weight: 600; color: #fff; background-color: #159957; border-color: #159957; }
 .btn.current:hover { color: #fff; background-color: #128048; }
 
+/* Home page group photo. The source image is 1280x960 with the people in the
+   lower part of the frame, so it is shown at half height and anchored near the
+   bottom -- this crops away most of the atrium above without touching the file.
+   Adjust object-position to re-frame: 100% = bottom edge, 0% = top edge. */
+.home-photo { width: 100%; aspect-ratio: 1280 / 480; object-fit: cover; object-position: center 95%; }
+
 /* "Previous Winners" dropdown, built on <details>/<summary>. */
 .nav-dropdown { position: relative; }
 .nav-dropdown > summary { display: inline-block; padding: 0.4rem 0.7rem; font-size: 0.85rem; list-style: none; cursor: pointer; }

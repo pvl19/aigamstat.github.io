@@ -4,7 +4,7 @@ layout: default
 
 A Special Interest Group of the [American Statistical Association](https://www.amstat.org)
 
-![AIG @JSM 2022](./images/jsm_astrostat_meeting_2022.jpg)
+![AIG @JSM 2022](./images/jsm_astrostat_meeting_2022.jpg){: .home-photo}
 <p style="text-align: center;">Astrostatistics Interest Group at JSM 2022, Washington, DC </p>
 
 ---
