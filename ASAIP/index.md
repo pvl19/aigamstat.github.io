@@ -9,15 +9,7 @@ The **Astro-Statistics and Astro-Informatics Portal (ASAIP)** was originally hos
 
 Have a related job, conference, or talk that you would like to advertise? Reach out to us by email at asaiportal at gmail. We are happy to add it to the website and/or send an announcement to our mailing list.
 
-# [Recent Job Postings](./jobs.html)
-
-# [Upcoming Conferences](./conf.html)
-
-# [Upcoming Talks](./talks.html)
-
 # Articles
-
-Introductory and reference articles carried over from the original ASAIP.
 
 - [Astrostatistics in a Nutshell](./Articles/Astrostat_nutshell.html)
 - [Astroinformatics in a Nutshell](./Articles/Astroinfo_nutshell.html)

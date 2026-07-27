@@ -27,3 +27,6 @@ jsm_years: ["2026", "2025", "2024", "2023", "2022", "2021", "2020"]
 # Years shown in the "Previous Winners" dropdown; each needs a matching
 # competition/winners/<year>.md page.
 winner_years: ["2025", "2024", "2023", "2022", "2021", "2020", "2019"]
+# Past years in the About Us > Officers dropdown; the current year's officers
+# live on about/officers/index.md, not in this list.
+officer_years: ["2025", "2024", "2023", "2022", "2021", "2020", "2019", "2018"]

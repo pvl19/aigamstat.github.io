@@ -6,7 +6,7 @@ layout: default
 
 ---
 
-**Official meeting site: [JSM 2020](https://ww2.amstat.org/meetings/jsm/2020/index.cfm)**
+[JSM 2020](https://ww2.amstat.org/meetings/jsm/2020/index.cfm)
 
 # Astrostatistics sessions at JSM 2020
 
@@ -24,7 +24,7 @@ The business meeting of the AIG was held on the afternoon of Aug 3 via Zoom.
 ### Agenda
 
 1. Overview and Census
-2. [Charter](https://astrostat.org/about_us.html#charter)
+2. [Charter](../about/charter.html)
   * Amendments on language, Program Chair term, and Webmaster
   * Elections for next year
   * Section vs Interest Group

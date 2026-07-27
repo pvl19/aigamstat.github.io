@@ -134,23 +134,34 @@ There are two rows:
 
   | URL starts with | Second row shows |
   |---|---|
+  | `/about/` | General · Officers · **Past Officers** dropdown · Charter |
   | `/jsm*` | current meeting + a **Past Years** dropdown |
   | `/competition/` | current competition + a **Previous Winners** dropdown |
-  | `/ASAIP/`, `/Library/` | ASAIP Home · Jobs · Conferences · Talks · Library · Contact |
+
+Home, Join AIG, News and ASAIP are single pages and have no second row.
 
 The current page is highlighted in both rows. Both dropdowns are plain
 `<details>` elements — no JavaScript — and each shows the year you're on in its
 label (e.g. "Past Years: 2022").
 
-Winners live one page per year under `competition/winners/`, with
-`competition/winners/index.md` listing them all. Application requirements for
-past competitions are not kept; only the current year's page exists.
+Winners live one page per year under `competition/winners/`, reachable only
+through the dropdown — there is no index page for them. Application
+requirements for past competitions are not kept; only the current year's page
+exists.
+
+About Us is split the same way: `about/index.md` (General), `about/officers/`
+(current officers on `index.md`, one page per past year alongside), and
+`about/charter.md`.
 
 ### Adding a new year
 
-The year lists live in `_config.yml` as `jsm_years` and `winner_years`. Create
-the page, add the year to the **front** of the list, and the nav updates
-everywhere — no layout edits needed.
+The year lists live in `_config.yml` as `jsm_years`, `winner_years` and
+`officer_years`. Create the page, add the year to the **front** of the list,
+and the nav updates everywhere — no layout edits needed.
+
+For a new year of officers: move the outgoing year from
+`about/officers/index.md` into `about/officers/<year>.md`, add that year to the
+front of `officer_years`, and put the new officers on the index page.
 
 Order matters for `jsm_years`: the first entry is treated as the current
 meeting. It's where the global "JSM" button points and the only year shown
@@ -164,8 +175,8 @@ outside the Past Years dropdown; everything after it goes in the dropdown.
 ## Making changes
 
 Content lives in Markdown files at the repo root (`index.md`, `news.md`,
-`about_us.md`, `join.md`) and in per-year and per-topic directories
-(`jsm2026/`, `competition/`, `ASAIP/`, `Library/`).
+`join.md`) and in per-year and per-topic directories (`about/`, `jsm2026/`,
+`competition/`, `ASAIP/`).
 
 The site does **not** use the `jekyll-theme-cayman` gem's appearance, despite
 `_config.yml` naming it. Both pieces are overridden locally:

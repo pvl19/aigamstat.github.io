@@ -38,13 +38,13 @@
       {%- endcomment -%}
 
       {%- assign u = page.url -%}
-      {%- if u contains '/jsm' -%}
+      {%- if u contains '/about' -%}
+        {%- assign section = 'about' -%}
+      {%- elsif u contains '/jsm' -%}
         {%- assign section = 'jsm' -%}
       {%- elsif u contains '/competition' -%}
         {%- assign section = 'competition' -%}
       {%- elsif u contains '/ASAIP' -%}
-        {%- assign section = 'asaip' -%}
-      {%- elsif u contains '/Library' -%}
         {%- assign section = 'asaip' -%}
       {%- endif -%}
 
@@ -57,7 +57,7 @@
 
       <nav class="site-nav" role="navigation" aria-label="Main">
         <a href="{{ '/' | relative_url }}" class="btn{% if u == '/' %} current{% endif %}">Home</a>
-        <a href="{{ '/about_us.html' | relative_url }}" class="btn{% if u contains '/about_us' %} current{% endif %}">About Us</a>
+        <a href="{{ '/about/' | relative_url }}" class="btn{% if section == 'about' %} current{% endif %}">About Us</a>
         <a href="{{ '/join.html' | relative_url }}" class="btn{% if u contains '/join' %} current{% endif %}">Join AIG</a>
         <a href="{{ '/competition/' | relative_url }}" class="btn{% if section == 'competition' %} current{% endif %}">Student Paper Competition</a>
         <a href="{{ '/jsm' | append: jsm_current | append: '/' | relative_url }}" class="btn{% if section == 'jsm' %} current{% endif %}">JSM</a>
@@ -65,7 +65,23 @@
         <a href="{{ '/news.html' | relative_url }}" class="btn{% if u contains '/news' %} current{% endif %}">News</a>
       </nav>
 
-      {%- if section == 'jsm' -%}
+      {%- if section == 'about' -%}
+      <nav class="section-nav" role="navigation" aria-label="About Us">
+        <a href="{{ '/about/' | relative_url }}" class="btn{% if u == '/about/' %} current{% endif %}">General</a>
+        <a href="{{ '/about/officers/' | relative_url }}" class="btn{% if u == '/about/officers/' %} current{% endif %}">Officers</a>
+        {%- assign oyr = nil -%}
+        {%- for yr in site.officer_years -%}{%- if u contains yr -%}{%- assign oyr = yr -%}{%- endif -%}{%- endfor -%}
+        <details class="nav-dropdown">
+          <summary class="btn{% if oyr %} current{% endif %}">Past Officers{% if oyr %}: {{ oyr }}{% endif %}</summary>
+          <div class="nav-dropdown-menu">
+            {%- for yr in site.officer_years -%}
+            <a href="{{ '/about/officers/' | append: yr | append: '.html' | relative_url }}" class="btn{% if u contains yr %} current{% endif %}">{{ yr }}</a>
+            {%- endfor -%}
+          </div>
+        </details>
+        <a href="{{ '/about/charter.html' | relative_url }}" class="btn{% if u contains '/charter' %} current{% endif %}">Charter</a>
+      </nav>
+      {%- elsif section == 'jsm' -%}
       <nav class="section-nav" role="navigation" aria-label="JSM">
         <a href="{{ '/jsm' | append: jsm_current | append: '/' | relative_url }}" class="btn{% if u contains jsm_current %} current{% endif %}">JSM {{ jsm_current }}</a>
         {%- assign jyr = nil -%}
@@ -92,33 +108,37 @@
         <details class="nav-dropdown">
           <summary class="btn{% if u contains '/winners' %} current{% endif %}">Previous Winners{% if wyr %}: {{ wyr }}{% endif %}</summary>
           <div class="nav-dropdown-menu">
-            <a href="{{ '/competition/winners/' | relative_url }}" class="btn{% if u == '/competition/winners/' %} current{% endif %}">All years</a>
             {%- for yr in site.winner_years -%}
             <a href="{{ '/competition/winners/' | append: yr | append: '.html' | relative_url }}" class="btn{% if u contains yr %} current{% endif %}">{{ yr }}</a>
             {%- endfor -%}
           </div>
         </details>
       </nav>
-      {%- elsif section == 'asaip' -%}
-      <nav class="section-nav" role="navigation" aria-label="ASAIP">
-        <a href="{{ '/ASAIP/' | relative_url }}" class="btn{% if u == '/ASAIP/' %} current{% endif %}">ASAIP Home</a>
-        <a href="{{ '/ASAIP/jobs.html' | relative_url }}" class="btn{% if u contains 'jobs' %} current{% endif %}">Jobs</a>
-        <a href="{{ '/ASAIP/conf.html' | relative_url }}" class="btn{% if u contains 'conf' %} current{% endif %}">Conferences</a>
-        <a href="{{ '/ASAIP/talks.html' | relative_url }}" class="btn{% if u contains 'talks' %} current{% endif %}">Talks</a>
-        <a href="{{ '/Library/library.html' | relative_url }}" class="btn{% if u contains '/Library' %} current{% endif %}">Library</a>
-        <a href="{{ '/ASAIP/index.html#contact' | relative_url }}" class="btn">Contact</a>
-      </nav>
       {%- endif -%}
 
       {{ content }}
 
       <footer class="site-footer">
-        <span class="site-footer-owner">A special interest group of the <a href="https://www.amstat.org">American Statistical Association</a>.</span>
-        {% if site.github.is_project_page %}
-          <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
-        {% endif %}
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
       </footer>
     </main>
+
+    <script>
+      // Open links that leave this site in a new tab. Done here rather than
+      // per-link because the pages are Markdown, and GitHub Pages does not
+      // allow the jekyll-target-blank plugin (it is not on their whitelist).
+      // Anchor .protocol/.host resolve relative URLs against the current page,
+      // so internal links, in-page anchors and mailto: links are left alone.
+      document.addEventListener('DOMContentLoaded', function () {
+        var links = document.querySelectorAll('a[href]');
+        for (var i = 0; i < links.length; i++) {
+          var a = links[i];
+          if (a.protocol !== 'http:' && a.protocol !== 'https:') continue;
+          if (a.host === window.location.host) continue;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+        }
+      });
+    </script>
   </body>
 </html>

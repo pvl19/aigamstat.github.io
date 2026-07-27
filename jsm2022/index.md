@@ -6,7 +6,7 @@ layout: default
 
 ---
 
-**Official meeting site: [JSM 2022](https://ww2.amstat.org/meetings/jsm/2022/)**
+[JSM 2022](https://ww2.amstat.org/meetings/jsm/2022/)
 
 ---
 

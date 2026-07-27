@@ -6,7 +6,7 @@ layout: default
 
 ---
 
-**Official meeting site: [JSM 2021](https://ww2.amstat.org/meetings/jsm/2021/)**
+[JSM 2021](https://ww2.amstat.org/meetings/jsm/2021/)
 
 ### Aug 7-12, 2021
 

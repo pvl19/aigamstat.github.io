@@ -6,7 +6,7 @@ layout: default
 
 ---
 
-**Official meeting site: [JSM 2023](https://ww2.amstat.org/meetings/jsm/2023/)**
+[JSM 2023](https://ww2.amstat.org/meetings/jsm/2023/)
 
 ---
 
