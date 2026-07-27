@@ -119,6 +119,17 @@ Handled automatically at build time, so you do not need to write them:
   new tab)" note for screen readers.
 - **Heading anchors** (`#session-401`) are generated from heading text.
 
+### The browser-tab icon
+
+[`app/icon.png`](app/icon.png) is the favicon. Next picks it up from that
+filename alone and adds the `<link rel="icon">` to every page, with `basePath`
+applied — there is nothing to wire up. Replace the file to change it.
+
+It is the AIG star, 512x512, with the background outside the disc made
+transparent so it does not show as a white square on a dark browser theme. The
+white star itself is preserved: the transparency was flood-filled inward from
+the edges rather than applied to every white pixel.
+
 ### Adding a page
 
 Create the Markdown file, then add a matching route under `app/`. Routes are
