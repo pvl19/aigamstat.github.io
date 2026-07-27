@@ -20,23 +20,18 @@ function yearsFromFiles(dir: string): string[] {
     .reverse();
 }
 
-/** JSM years come from directories: content/jsm2026/ -> "2026". Newest first. */
-export function jsmYears(): string[] {
-  return fs
-    .readdirSync(CONTENT_DIR)
-    .map((d) => d.match(/^jsm(\d{4})$/)?.[1])
-    .filter((y): y is string => Boolean(y))
-    .sort()
-    .reverse();
-}
+/**
+ * Every year-based section is a folder of YYYY.md files, so they all read the
+ * same way. Newest first.
+ */
+export const jsmYears = () => yearsFromFiles('jsm');
+export const winnerYears = () => yearsFromFiles('competition/winners');
+export const officerYears = () => yearsFromFiles('officers');
 
 /** The newest JSM year is the current meeting. */
 export function currentJsmYear(): string {
   return jsmYears()[0];
 }
-
-export const winnerYears = () => yearsFromFiles('competition/winners');
-export const officerYears = () => yearsFromFiles('about/officers');
 
 export type Section =
   | 'home'
@@ -49,16 +44,13 @@ export type Section =
   | 'contact';
 
 /**
- * Which top-level section a URL belongs to, for highlighting the nav.
- *
- * Officers and Charter are top-level sections but keep their original
- * /about/... URLs so existing links and bookmarks still resolve. The nav
- * hierarchy and the URL structure differ here deliberately.
+ * Which top-level section a URL belongs to, for highlighting the nav. Each
+ * section is the first path segment, so this mirrors the URL structure exactly.
  */
 export function sectionFor(url: string): Section {
   if (url === '/') return 'home';
-  if (url.startsWith('/about/officers')) return 'officers';
-  if (url.startsWith('/about/charter')) return 'charter';
+  if (url.startsWith('/officers')) return 'officers';
+  if (url.startsWith('/charter')) return 'charter';
   if (url.startsWith('/join')) return 'join';
   if (url.startsWith('/competition')) return 'competition';
   if (url.startsWith('/jsm')) return 'jsm';
@@ -77,17 +69,15 @@ export type NavItem = { label: string; url: string; section: Section };
 export function mainNav(): NavItem[] {
   return [
     { label: 'Home', url: '/', section: 'home' },
-    { label: 'JSM 2026', url: `/jsm${currentJsmYear()}/`, section: 'jsm' },
-    { label: 'Officers', url: '/about/officers/', section: 'officers' },
-    { label: 'Charter', url: '/about/charter.html', section: 'charter' },
+    // Label follows the content, so adding content/jsm/2027.md moves both the
+    // link and the year shown on it.
+    { label: `JSM ${currentJsmYear()}`, url: `/jsm/${currentJsmYear()}/`, section: 'jsm' },
+    { label: 'Officers', url: '/officers/', section: 'officers' },
+    { label: 'Charter', url: '/charter/', section: 'charter' },
     // Points at the first item of the section row, not at /competition/, so the
     // tab opens on whatever that row shows first.
-    {
-      label: 'Student Paper Competition',
-      url: '/competition/nominees.html',
-      section: 'competition',
-    },
-    { label: 'News', url: '/news.html', section: 'news' },
-    { label: 'Contact', url: '/contact.html', section: 'contact' },
+    { label: 'Student Paper Competition', url: '/competition/finalists/', section: 'competition' },
+    { label: 'News', url: '/news/', section: 'news' },
+    { label: 'Contact', url: '/contact/', section: 'contact' },
   ];
 }

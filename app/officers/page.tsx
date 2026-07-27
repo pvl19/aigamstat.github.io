@@ -1,14 +1,14 @@
 import ContentPage, { metadataFor } from '@/components/ContentPage';
-import PastOfficers from '@/components/PastOfficers';
+import OfficerYears from '@/components/OfficerYears';
 
-const URL = '/about/officers/';
-const FILE = 'about/officers/index.md';
+const URL = '/officers/';
+const FILE = 'officers/index.md';
 
 export const generateMetadata = () => metadataFor(FILE);
 export default function Page() {
   return (
     <ContentPage url={URL} file={FILE}>
-      <PastOfficers url={URL} />
+      <OfficerYears url={URL} />
     </ContentPage>
   );
 }

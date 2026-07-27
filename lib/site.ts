@@ -2,7 +2,7 @@
 
 /**
  * Set from next.config.mjs. Empty string in tests/dev fallbacks so that
- * href('/news.html') degrades to '/news.html' rather than 'undefined/news.html'.
+ * href('/news/') degrades to '/news/' rather than 'undefined/news/'.
  */
 export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 

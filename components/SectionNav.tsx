@@ -40,7 +40,7 @@ function Item({ label, url, current }: { label: string; url: string; current: bo
 export default function SectionNav({ url }: { url: string }) {
   // Officers and Charter are top-level sections in their own right, so they get
   // no row here. Officers still offers past years, but from its own page
-  // content -- see components/PastOfficers.tsx.
+  // content -- see components/OfficerYears.tsx.
 
   if (url.startsWith('/competition')) {
     const years = winnerYears();
@@ -48,17 +48,21 @@ export default function SectionNav({ url }: { url: string }) {
     return (
       <Row label="Student Paper Competition sections">
         <Item
-          label="2026 Finalists"
-          url="/competition/nominees.html"
-          current={url.includes('/nominees')}
+          label={`${currentJsmYear()} Finalists`}
+          url="/competition/finalists/"
+          current={url.startsWith('/competition/finalists')}
         />
-        <Item label="2026 Competition (closed)" url="/competition/" current={url === '/competition/'} />
+        <Item
+          label={`${currentJsmYear()} Competition (closed)`}
+          url="/competition/"
+          current={url === '/competition/'}
+        />
         <YearDropdown
           label="Previous Winners"
           activeYear={active}
           items={years.map((y) => ({
             label: y,
-            url: `/competition/winners/${y}.html`,
+            url: `/competition/winners/${y}/`,
             current: y === active,
           }))}
         />
@@ -72,11 +76,11 @@ export default function SectionNav({ url }: { url: string }) {
     const active = past.find((y) => url.includes(y));
     return (
       <Row label="JSM years">
-        <Item label={`JSM ${current}`} url={`/jsm${current}/`} current={url.includes(current)} />
+        <Item label={`JSM ${current}`} url={`/jsm/${current}/`} current={url.includes(current)} />
         <YearDropdown
           label="Past Years"
           activeYear={active}
-          items={past.map((y) => ({ label: `JSM ${y}`, url: `/jsm${y}/`, current: y === active }))}
+          items={past.map((y) => ({ label: `JSM ${y}`, url: `/jsm/${y}/`, current: y === active }))}
         />
       </Row>
     );

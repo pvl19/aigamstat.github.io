@@ -6,9 +6,9 @@ import { loadPage } from '@/lib/markdown';
 import { SITE_TITLE } from '@/lib/site';
 
 type Props = {
-  /** Canonical site-root URL of this page, e.g. '/about/officers/2021.html'. */
+  /** Canonical site-root URL of this page, e.g. '/officers/2021/'. */
   url: string;
-  /** Path of the Markdown file under content/, e.g. 'about/officers/2021.md'. */
+  /** Path of the Markdown file under content/, e.g. 'officers/2021.md'. */
   file: string;
   /** Optional controls rendered above the Markdown, inside <main>. */
   children?: React.ReactNode;

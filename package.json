@@ -5,7 +5,7 @@
   "description": "Astrostatistics Interest Group website",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/postbuild.mjs"
+    "build": "next build"
   },
   "dependencies": {
     "next": "^15.1.6",

@@ -37,7 +37,7 @@ export default function SiteHeader({ url }: { url: string }) {
             destination among several. Green rather than the blue used for the
             current nav item, so the two are never confused. */}
         <a
-          href={href('/join.html')}
+          href={href('/join/')}
           aria-current={active === 'join' ? 'page' : undefined}
           className="shrink-0 rounded-lg bg-brand-green-dark px-4 py-2.5 text-sm font-semibold text-white
                      shadow-sm transition hover:bg-brand-green-dark/90

@@ -9,7 +9,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
 import { visit } from 'unist-util-visit';
 import type { Element, Root } from 'hast';
-import { isExternal } from './site';
+import { href, isExternal } from './site';
 
 export const CONTENT_DIR = path.join(process.cwd(), 'content');
 
@@ -42,6 +42,28 @@ function rehypeExternalLinks() {
 }
 
 /**
+ * Content links are written from the site root -- `/jsm/2026/`, `/images/x.jpg`
+ * -- and get `basePath` prefixed here.
+ *
+ * Relative links (`../../jsm/2026/`) would also work, but they encode how deep
+ * the linking page happens to sit, so every one of them breaks when a page
+ * moves. Root-absolute links say where the target is and nothing about the
+ * source. Markdown alone cannot express `basePath`, which is what this adds.
+ */
+function rehypeBasePath() {
+  return (tree: Root) => {
+    visit(tree, 'element', (node: Element) => {
+      const attr = node.tagName === 'a' ? 'href' : node.tagName === 'img' ? 'src' : null;
+      if (!attr) return;
+      const url = String(node.properties?.[attr] ?? '');
+      // Only site-root paths. Protocol-relative URLs (//host/x) are external.
+      if (!url.startsWith('/') || url.startsWith('//')) return;
+      node.properties = { ...node.properties, [attr]: href(url) };
+    });
+  };
+}
+
+/**
  * The Markdown came from Jekyll/kramdown, where a trailing `\\` is a hard line
  * break. CommonMark uses a single trailing backslash, so `\\` would otherwise
  * render as a stray backslash. Rewritten here rather than in the content files
@@ -66,6 +88,7 @@ const processor = unified()
   .use(remarkRehype, { allowDangerousHtml: true })
   .use(rehypeRaw)
   .use(rehypeSlug) // heading ids, so existing #anchor links keep resolving
+  .use(rehypeBasePath)
   .use(rehypeExternalLinks)
   .use(rehypeStringify, { allowDangerousHtml: true });
 
@@ -74,7 +97,7 @@ export async function renderMarkdown(md: string): Promise<string> {
   return String(file);
 }
 
-/** Read a content file, e.g. contentPath('about/charter.md'). */
+/** Read a content file, e.g. contentPath('charter.md'). */
 export function readContent(contentPath: string): string {
   return fs.readFileSync(path.join(CONTENT_DIR, contentPath), 'utf8');
 }

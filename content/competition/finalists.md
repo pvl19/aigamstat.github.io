@@ -1,6 +1,6 @@
 # 2026 Student Paper Competition Finalists
 
-Presented in the Astrostatistics Interest Group Student Paper Award session at [JSM 2026](../jsm2026/).
+Presented in the Astrostatistics Interest Group Student Paper Award session at [JSM 2026](/jsm/2026/).
 
 Sun, Aug 2, 4:00 PM - 5:50 PM\
 Room CC-209 Thomas M. Menino Convention & Exhibition Center\

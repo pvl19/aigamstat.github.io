@@ -1,6 +1,6 @@
 import ContentPage, { metadataFor } from '@/components/ContentPage';
 
-const URL = '/join.html';
+const URL = '/join/';
 const FILE = 'join.md';
 
 export const generateMetadata = () => metadataFor(FILE);

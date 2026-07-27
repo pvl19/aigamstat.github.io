@@ -6,7 +6,7 @@ The last 1-2 decades have ushered us into the era of Big Data in Astronomy, whic
 
 This interest group is designed to strengthen existing collaborations and build new ones, where statisticians are exposed to astronomy as a fruitful area of collaborative methodological development, and astronomers are able to leverage the expertise of statisticians in their science.
 
-If you would like to stay up to date with our research and activities, [join the ASA Astrostatistics Interest Group](./join.html)!
+If you would like to stay up to date with our research and activities, [join the ASA Astrostatistics Interest Group](/join/)!
 
-<img src="./images/jsm_astrostat_meeting_2022.jpg" alt="AIG @JSM 2022" class="home-photo" />
+<img src="/images/jsm_astrostat_meeting_2022.jpg" alt="AIG @JSM 2022" class="home-photo" />
 <p style="text-align: center;">Astrostatistics Interest Group at JSM 2022, Washington, DC </p>

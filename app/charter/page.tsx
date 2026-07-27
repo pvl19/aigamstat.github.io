@@ -1,7 +1,7 @@
 import ContentPage, { metadataFor } from '@/components/ContentPage';
 
-const URL = '/about/charter.html';
-const FILE = 'about/charter.md';
+const URL = '/charter/';
+const FILE = 'charter.md';
 
 export const generateMetadata = () => metadataFor(FILE);
 export default function Page() {

@@ -17,5 +17,5 @@ export async function generateMetadata({ params }: { params: Promise<{ year: str
 
 export default async function Page({ params }: { params: Promise<{ year: string }> }) {
   const { year } = await params;
-  return <ContentPage url={`/competition/winners/${year}.html`} file={fileFor(year)} />;
+  return <ContentPage url={`/competition/winners/${year}/`} file={fileFor(year)} />;
 }

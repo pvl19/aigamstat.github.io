@@ -1,6 +1,6 @@
 import ContentPage, { metadataFor } from '@/components/ContentPage';
 
-const URL = '/contact.html';
+const URL = '/contact/';
 const FILE = 'contact.md';
 
 export const generateMetadata = () => metadataFor(FILE);

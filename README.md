@@ -38,33 +38,15 @@ a page takes roughly half a second and feels sluggish. That is the compiler, not
 the site. The published pages are pre-built HTML and load in a few milliseconds,
 and `npm run build` is the way to check real performance.
 
-### Local URLs differ from published ones
+### Local URLs match published ones
 
-The export adds `.html` and creates the directory index files, so several URL
-shapes exist only *after* a build. Without help the dev server therefore breaks
-on links that are perfectly correct in production:
+Every page is a directory URL (`/officers/`, `/jsm/2026/`), which the dev server
+and the export produce identically. What you see locally is what gets published,
+including the address bar.
 
-| Written in content | Published | Bare dev server |
-|---|---|---|
-| `./join.html` | `/join.html` | route is `/join` — **500** |
-| `../../jsm2022/index.html` | `/jsm2022/index.html` | created by postbuild — **404** |
-| `./images/photo.jpg` on `/about/` | resolves against `/about/` | dev serves `/about`, so it resolves against `/` — **404** |
-
-The last one is the subtlest: with the trailing slash stripped, a browser treats
-`about` as a file name and resolves every relative link one level too high. On
-the home page that silently breaks the photo.
-
-The `.html` cases fail as a confusing *500* rather than a 404, because the path
-falls through to a dynamic route which rejects it as an unknown param.
-
-[`next.config.mjs`](next.config.mjs) fixes all three for development only, via
-`skipTrailingSlashRedirect` and two redirects — see the comments there. None of
-it is included in the build, so the published site is byte-for-byte unaffected.
-
-One consequence: the address bar drops the `.html` locally. That is expected.
-
-If you add content, prefer relative links (`./join.html`, `../../jsm2022/`) as
-the existing pages do; they work in both places.
+Write links between pages from the site root — `/join/`, `/jsm/2022/`,
+`/images/photo.jpg` — never as relative paths. The build prefixes `basePath`
+for you, and a root path does not change when the page linking to it moves.
 
 ### Dependencies and `npm audit`
 
@@ -103,21 +85,24 @@ Every page is a Markdown file under `content/`, laid out to mirror its URL:
 | URL | File |
 |---|---|
 | `/` | `content/index.md` |
-| `/news.html` | `content/news.md` |
-| `/contact.html` | `content/contact.md` |
-| `/about/charter.html` | `content/about/charter.md` |
-| `/about/officers/2021.html` | `content/about/officers/2021.md` |
-| `/competition/winners/2022.html` | `content/competition/winners/2022.md` |
-| `/jsm2026/` | `content/jsm2026/index.md` |
+| `/news/` | `content/news.md` |
+| `/contact/` | `content/contact.md` |
+| `/charter/` | `content/charter.md` |
+| `/officers/2021/` | `content/officers/2021.md` |
+| `/competition/winners/2022/` | `content/competition/winners/2022.md` |
+| `/jsm/2026/` | `content/jsm/2026.md` |
 
 Ordinary Markdown, plus inline HTML where the original pages used it
-(`<p style="text-align: center;">`, `<br>`, `<sup>`). Links between pages are
-relative (`./join.html`, `../../jsm2022/index.html`) and images live in
-`public/images/`.
+(`<p style="text-align: center;">`, `<br>`, `<sup>`). Links between pages and to
+images are written from the site root — `/join/`, `/images/photo.jpg` — and the
+build prefixes `basePath`.
 
-Two conveniences carried over from the old site are handled automatically at
-build time, so you do not need to write them:
+To break a line without starting a new paragraph, end it with a backslash.
+Trailing spaces also work but are invisible and editors strip them on save.
 
+Handled automatically at build time, so you do not need to write them:
+
+- **`basePath`** is prefixed to every root-relative link and image.
 - **Links to other websites** get `target="_blank"` plus a hidden "(opens in a
   new tab)" note for screen readers.
 - **Heading anchors** (`#session-401`) are generated from heading text.
@@ -156,13 +141,13 @@ the transform is [`lib/sessionCards.ts`](lib/sessionCards.ts).
 
 Just add the file. Navigation menus are built by reading `content/`, so:
 
-- `content/about/officers/2027.md` → appears in **Past Officers**
+- `content/officers/2027.md` → appears in **Past Officers**
 - `content/competition/winners/2027.md` → appears in **Previous Winners**
-- `content/jsm2027/index.md` → becomes the current JSM, older years move into
+- `content/jsm/2027.md` → becomes the current JSM, older years move into
   **Past Years**, and the main "JSM" nav button repoints automatically
 
-The year pages themselves need no route file — `app/[jsmYear]`,
-`app/about/officers/[year]` and `app/competition/winners/[year]` generate one
+The year pages themselves need no route file — `app/jsm/[year]`,
+`app/officers/[year]` and `app/competition/winners/[year]` generate one
 page per file found.
 
 ---
@@ -193,19 +178,28 @@ resolve one level too high and the site will come out unstyled.
 
 **This is the only value that needs changing when the site moves.**
 
-### URLs are deliberately preserved
+### URL structure
 
-The site keeps the exact URLs it had under Jekyll, including `.html` endings and
-directory-style paths, so existing links and bookmarks still work.
+Every URL is a directory path ending in a slash, and the first segment is always
+the navigation section it belongs to:
 
-Next normally exports the route `/competition` as `competition.html`, but the
-canonical URL is `/competition/`. [`scripts/postbuild.mjs`](scripts/postbuild.mjs)
-moves those files into place after the build, deriving the list from every
-`content/*/index.md`. Nothing to maintain by hand.
+```
+/                        /jsm/2026/           /officers/
+/join/                   /jsm/2024/           /officers/2021/
+/news/                   /competition/        /charter/
+/contact/                /competition/finalists/
+                         /competition/winners/2024/
+```
 
-Officers and Charter are top-level items in the navigation but keep their
-original `/about/...` URLs, so links and bookmarks made before the restructure
-still resolve. The nav hierarchy and the URL structure differ there on purpose.
+`trailingSlash: true` in [`next.config.mjs`](next.config.mjs) is what produces
+them: the route `/officers` exports to `out/officers/index.html`. There is no
+post-build step and no `.html` anywhere.
+
+**These URLs are not the ones the Jekyll site used.** Pages moved out of
+`/about/`, the JSM years moved under `/jsm/`, and the `.html` endings went away,
+so that the URL of a page matches where it sits in the navigation. Old inbound
+links are not redirected — they land on the 404 page, which carries the full
+site navigation.
 
 Navigation uses plain `<a href>` rather than `next/link`, so every click is a
 real page load at the exact published path. On a site this size the difference
@@ -217,12 +211,23 @@ is imperceptible, and it keeps URLs unambiguous.
 
 ```
 app/            routes — each is a thin wrapper naming a URL and a content file
-components/     SiteHeader, SectionNav, YearDropdown, ContentPage, SiteFooter
-lib/            markdown pipeline, navigation model, URL helpers
-content/        the Markdown pages
-public/         images and PDFs
-scripts/        post-build URL fixups
+components/     SiteHeader, SectionNav, OfficerYears, YearDropdown,
+                ContentPage, SiteFooter, navStyles
+lib/            markdown pipeline, session cards, navigation model, URL helpers
+content/        the Markdown pages, laid out to mirror the URLs
+public/         images and PDFs, also mirroring the URLs
 ```
+
+`app/`, `content/` and `public/` share the same shape, so a page's route, its
+Markdown and any file it links to all sit at the same path:
+
+```
+/jsm/2026/   ->  app/jsm/[year]/page.tsx   content/jsm/2026.md   public/jsm/2020/*.pdf
+/officers/2021/  app/officers/[year]/…     content/officers/2021.md
+```
+
+Year-based sections are always a folder of `YYYY.md` files, which is why
+`jsmYears()`, `winnerYears()` and `officerYears()` are one shared helper.
 
 Navigation lives only in `components/`:
 

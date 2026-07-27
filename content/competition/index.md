@@ -2,13 +2,13 @@
 
 The Astrostatistics Interest Group of the American Statistical Association (ASA/AIG) sponsors a student paper competition, with the submitted papers being related to the development and/or application of statistical methods to problems in astronomy, astrophysics, or cosmology. The winner and (up to) four other finalists will present their papers in the ASA Astrostatistics Interest Group Topic-contributed session at the [2026 Joint Statistical Meetings](https://ww2.amstat.org/meetings/jsm/2026/) in Boston, Massachusetts, USA. Each finalist will receive $100, while the overall winner will receive an additional $400.
 
-**A collection of previous winners can be found [here](./winners/2025.html).**
+**A collection of previous winners can be found [here](/competition/winners/2025/).**
 
 ## Application deadline: Monday, December 15, 2025 at 11:59 pm EST
 
 ## Eligibility:
 
-To be eligible for this award, the candidate must have been a full-time student (undergraduate, master's, or Ph.D.) as of the start of the paper eligibility window (Dec 13, 2024). The candidate must be the principal contributor to the research paper, which contains work done primarily while the candidate was a student. The paper must have been submitted to a peer-reviewed publication (e.g. peer-reviewed journal, conference proceeding, etc) between December 13, 2024, and the application deadline. The advisor (or another co-author) must write a letter confirming the eligibility of the candidate and the paper as well as stating that the candidate had primary responsibility for the research and write-up of the submission. The candidate must be a member of the ASA Astrostatistics Interest Group (to join, see the details on the [interest group website](../join.html)). Students who have previously won the Best Astrostatistics Paper award are not eligible to participate. 
+To be eligible for this award, the candidate must have been a full-time student (undergraduate, master's, or Ph.D.) as of the start of the paper eligibility window (Dec 13, 2024). The candidate must be the principal contributor to the research paper, which contains work done primarily while the candidate was a student. The paper must have been submitted to a peer-reviewed publication (e.g. peer-reviewed journal, conference proceeding, etc) between December 13, 2024, and the application deadline. The advisor (or another co-author) must write a letter confirming the eligibility of the candidate and the paper as well as stating that the candidate had primary responsibility for the research and write-up of the submission. The candidate must be a member of the ASA Astrostatistics Interest Group (to join, see the details on the [interest group website](/join/)). Students who have previously won the Best Astrostatistics Paper award are not eligible to participate. 
 
 **We strongly encourage students from groups underrepresented in statistics and/or astronomy to apply!**
 
