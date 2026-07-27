@@ -1,196 +1,236 @@
 # Astrostatistics Interest Group Homepage
 
-Jekyll site for the ASA Astrostatistics Interest Group.
+A React site built with Next.js, deployed to GitHub Pages. Page content is
+plain Markdown so it can be edited without touching any React.
 
-- **Upstream (production):** <http://astrostat.org/>
-- **This fork:** <https://pvl19.github.io/aigamstat.github.io/>
+**Live site:** <http://astrostat.org/>
 
 ---
 
 ## Running the site locally
 
-You need Docker running. Nothing else — no Ruby, no Jekyll, no gems on your machine.
+Requires [Node.js](https://nodejs.org) 20 or newer.
 
 ```sh
-./serve.sh
+npm install     # first time only
+npm run dev
 ```
 
-Then open <http://localhost:4000/aigamstat.github.io/>.
+Then open **<http://localhost:3000>**.
 
-The first run downloads the `ruby:3.1` image and installs the gems (a few
-minutes). Gems are cached in a Docker volume called `aigamstat-gems`, so later
-runs start in seconds. Edit any `.md` file and Jekyll rebuilds automatically —
-refresh the browser to see it.
+Edits to anything under `content/` appear immediately — no restart, no rebuild.
 
-Use a different port with `PORT=8080 ./serve.sh`.
+> **If `basePath` is set** in [`next.config.mjs`](next.config.mjs), the dev
+> server mirrors it so local and published paths match — open
+> `http://localhost:3000/<basePath>` instead, and the bare root will 404. See
+> *The `basePath` setting* below.
 
-> **If a style change doesn't show up, hard-refresh** (Cmd-Shift-R). The layout
-> links the stylesheet as `aig.css?v=<git commit sha>`, so the URL only
-> changes when you *commit*. Edit the CSS without committing and your browser
-> will happily keep serving its cached copy.
-
-> **Note the URL.** Because `baseurl` is set (see below), the site is served at
-> `/aigamstat.github.io/`, *not* at the bare root. <http://localhost:4000/> will
-> 404. This is deliberate: it makes local URLs match production exactly, so
-> broken paths show up before you deploy.
-
-### Without Docker
-
-If you'd rather run Jekyll natively, you need Ruby 3.x (macOS ships 2.6, which
-is too old for the current gems — install a newer one via Homebrew or rbenv):
+To reproduce exactly what gets published:
 
 ```sh
-bundle install
-bundle exec jekyll serve
+npm run build   # writes the finished site to out/
 ```
 
-`Gemfile.lock` is intentionally not committed, so it resolves against whatever
-Ruby you're using.
+### The dev server is slower than the real site
+
+`next dev` compiles each page the first time you open it, so the first visit to
+a page takes roughly half a second and feels sluggish. That is the compiler, not
+the site. The published pages are pre-built HTML and load in a few milliseconds,
+and `npm run build` is the way to check real performance.
+
+### Local URLs differ from published ones
+
+The export adds `.html` and creates the directory index files, so several URL
+shapes exist only *after* a build. Without help the dev server therefore breaks
+on links that are perfectly correct in production:
+
+| Written in content | Published | Bare dev server |
+|---|---|---|
+| `./join.html` | `/join.html` | route is `/join` — **500** |
+| `./ASAIP/index.html` | `/ASAIP/index.html` | created by postbuild — **404** |
+| `./images/photo.jpg` on `/about/` | resolves against `/about/` | dev serves `/about`, so it resolves against `/` — **404** |
+
+The last one is the subtlest: with the trailing slash stripped, a browser treats
+`about` as a file name and resolves every relative link one level too high. On
+the home page that silently breaks the photo.
+
+The `.html` cases fail as a confusing *500* rather than a 404, because the path
+falls through to a dynamic route which rejects it as an unknown param.
+
+[`next.config.mjs`](next.config.mjs) fixes all three for development only, via
+`skipTrailingSlashRedirect` and two redirects — see the comments there. None of
+it is included in the build, so the published site is byte-for-byte unaffected.
+
+One consequence: the address bar drops the `.html` locally. That is expected.
+
+If you add content, prefer relative links (`./join.html`, `../../jsm2022/`) as
+the existing pages do; they work in both places.
+
+### Dependencies and `npm audit`
+
+**Never run `npm audit fix --force` on this project.** npm treats any version
+outside an advisory's affected range as a "fix", including older ones — asked to
+patch a Next.js dependency it will happily install `next@9.3.3`, six major
+versions backwards, which breaks the build completely.
+
+When an advisory appears in a package Next depends on, pin the patched version
+in the `overrides` block of `package.json` instead. That repoints the transitive
+dependency without touching Next itself:
+
+```json
+"overrides": {
+  "postcss": "^8.5.23",
+  "sharp": "^0.35.3"
+}
+```
+
+Then `rm -rf node_modules package-lock.json && npm install`, and check
+`npm audit` reports zero. Run `npm run build` afterwards — an override forces a
+version the parent package never tested against, so the build is the proof it
+worked.
+
+Worth keeping in perspective: everything here is a **build-time** dependency.
+The published site is static HTML, CSS and images on GitHub Pages, with no
+server running any of this. The CSS these tools process is the site's own, not
+attacker-supplied.
+
+---
+
+## Editing content
+
+Every page is a Markdown file under `content/`, laid out to mirror its URL:
+
+| URL | File |
+|---|---|
+| `/` | `content/index.md` |
+| `/news.html` | `content/news.md` |
+| `/about/` | `content/about/index.md` |
+| `/about/charter.html` | `content/about/charter.md` |
+| `/about/officers/2021.html` | `content/about/officers/2021.md` |
+| `/competition/winners/2022.html` | `content/competition/winners/2022.md` |
+| `/jsm2026/` | `content/jsm2026/index.md` |
+
+Ordinary Markdown, plus inline HTML where the original pages used it
+(`<p style="text-align: center;">`, `<br>`, `<sup>`). Links between pages are
+relative (`./join.html`, `../../jsm2022/index.html`) and images live in
+`public/images/`.
+
+Two conveniences carried over from the old site are handled automatically at
+build time, so you do not need to write them:
+
+- **Links to other websites** get `target="_blank"` plus a hidden "(opens in a
+  new tab)" note for screen readers.
+- **Heading anchors** (`#session-401`) are generated from heading text.
+
+### Adding a page
+
+Create the Markdown file, then add a matching route under `app/`. Routes are
+three lines — copy `app/join/page.tsx` and change the two constants.
+
+### Adding a year
+
+Just add the file. Navigation menus are built by reading `content/`, so:
+
+- `content/about/officers/2027.md` → appears in **Past Officers**
+- `content/competition/winners/2027.md` → appears in **Previous Winners**
+- `content/jsm2027/index.md` → becomes the current JSM, older years move into
+  **Past Years**, and the main "JSM" nav button repoints automatically
+
+The year pages themselves need no route file — `app/[jsmYear]`,
+`app/about/officers/[year]` and `app/competition/winners/[year]` generate one
+page per file found.
 
 ---
 
 ## How deployment works
 
-There is no build script and no CI workflow. GitHub Pages builds this site
-itself: push to `master`, and GitHub runs Jekyll and publishes the result.
-Deployment takes a minute or two. Progress and build errors show up under the
-repo's **Actions** tab.
+Push to `master` and [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
+builds the site and publishes it. Progress and failures appear under the repo's
+**Actions** tab. A failed build leaves the currently published site untouched.
 
-To enable it on a fresh fork: **Settings → Pages → Build and deployment**, set
-source to *Deploy from a branch*, branch `master`, folder `/ (root)`.
+This requires **Settings → Pages → Source** to be set to **GitHub Actions**
+(not "Deploy from a branch" — that mode only knows how to run Jekyll).
 
-### The `baseurl` setting — read this before renaming anything
+### The `basePath` setting
 
-GitHub Pages serves a repo at one of two kinds of URL, and which one you get
-depends **entirely on the repository's name**:
+`basePath` in [`next.config.mjs`](next.config.mjs) is the equivalent of Jekyll's
+old `baseurl`, and it has to match how GitHub Pages serves the repository:
 
-| Repo name | Served at | `baseurl` needed |
-|---|---|---|
-| `<username>.github.io` (a *user* page) | `https://<username>.github.io/` | none |
-| anything else (a *project* page) | `https://<username>.github.io/<repo>/` | `/<repo>` |
+| How the repo is served | `basePath` |
+|---|---|
+| From a custom domain, or as `<account>.github.io` | `''` (empty) |
+| As a project page at `<account>.github.io/<repo>/` | `'/<repo>'` |
 
-This fork is named `aigamstat.github.io` but lives under the `pvl19` account, so
-it is a **project page** — the repo name only coincidentally looks like a user
-page. It is served from a subdirectory, which is why `_config.yml` sets:
+The production site runs on a custom domain and is served from the root, so it
+needs no `basePath`. A copy deployed to `<account>.github.io/<repo>/` — a test
+deployment, for example — must set it, or every stylesheet, image and link will
+resolve one level too high and the site will come out unstyled.
 
-```yaml
-baseurl: /aigamstat.github.io
-repository: pvl19/aigamstat.github.io
-```
+**This is the only value that needs changing when the site moves.**
 
-Without `baseurl`, the stylesheet and images resolve to `/assets/...` and
-`/images/...` — the account root — and you get an unstyled page with broken
-images. `repository` tells the `jekyll-github-metadata` plugin which repo it's
-building, which GitHub supplies automatically but a local build cannot infer.
+### URLs are deliberately preserved
 
-**If you rename or move the repo, update both values to match**, or the
-deployed site will break. Renaming it to `pvl19.github.io` would make it a user
-page: delete `baseurl` entirely in that case.
+The site keeps the exact URLs it had under Jekyll, including `.html` endings and
+directory-style paths, so existing links and bookmarks still work.
 
-### Links in content
+Next normally exports the route `/about` as `about.html`, but the canonical URL
+is `/about/`. [`scripts/postbuild.mjs`](scripts/postbuild.mjs) moves those files
+into place after the build, deriving the list from every `content/*/index.md`.
+Nothing to maintain by hand.
 
-Internal links are written relative (`./news.html`, `../jsm2021/index.html`,
-`![](./images/foo.jpg)`) and the build rewrites them with `baseurl` applied.
-**Don't write root-absolute links** like `/images/foo.jpg` — those skip
-`baseurl` and will 404 on a project page. Keep using the `./` and `../` style.
-
-This applies to `assets/css/aig.css` too, with an important difference:
-Jekyll copies that file verbatim and does **not** rewrite paths inside it. So
-`url()` references must be written relative to the stylesheet's own location,
-e.g. `url(../../images/AIGpreview.png)` for the header banner. That form
-resolves correctly whether or not a `baseurl` is set.
-
-### Why the stylesheet is called `aig.css` and not `style.css`
-
-Do not rename it back. Every gem theme ships `assets/css/style.scss`, which
-compiles to `assets/css/style.css` — where this site's stylesheet used to live.
-On a rebuild the theme's version could overwrite ours, silently swapping the AIG
-banner for a stock green gradient. Dropping `theme:` from `_config.yml` does not
-help: the `github-pages` gem then falls back to `jekyll-theme-primer`, which
-collides identically. A distinct filename is the fix.
-
-### Custom domains and `CNAME`
-
-The upstream repo has a `CNAME` file containing `astrostat.org`, which binds it
-to that domain. This fork **must not** have one: a domain can only be claimed by
-a single repository, so a forked `CNAME` makes the fork's Pages deploy fail.
-It has been removed here deliberately — don't restore it unless you intend to
-point a domain you actually control at this repo.
+Navigation uses plain `<a href>` rather than `next/link`, so every click is a
+real page load at the exact published path. On a site this size the difference
+is imperceptible, and it keeps URLs unambiguous.
 
 ---
 
-## Site structure and navigation
+## How the code is organised
 
-Navigation is defined **once**, in `_layouts/default.html`. Do not paste nav
-buttons into individual pages — that is what caused every page to drift apart
-previously (at one point there were ten different nav bars, and the "JSM"
-button pointed to six different years depending on where you clicked it).
-
-There are two rows:
-
-- **Global row**, on every page: Home · About Us · Join AIG · Student Paper
-  Competition · JSM · ASAIP · News
-- **Section row**, added automatically based on the page's URL:
-
-  | URL starts with | Second row shows |
-  |---|---|
-  | `/about/` | General · Officers · **Past Officers** dropdown · Charter |
-  | `/jsm*` | current meeting + a **Past Years** dropdown |
-  | `/competition/` | current competition + a **Previous Winners** dropdown |
-
-Home, Join AIG, News and ASAIP are single pages and have no second row.
-
-The current page is highlighted in both rows. Both dropdowns are plain
-`<details>` elements — no JavaScript — and each shows the year you're on in its
-label (e.g. "Past Years: 2022").
-
-Winners live one page per year under `competition/winners/`, reachable only
-through the dropdown — there is no index page for them. Application
-requirements for past competitions are not kept; only the current year's page
-exists.
-
-About Us is split the same way: `about/index.md` (General), `about/officers/`
-(current officers on `index.md`, one page per past year alongside), and
-`about/charter.md`.
-
-### Adding a new year
-
-The year lists live in `_config.yml` as `jsm_years`, `winner_years` and
-`officer_years`. Create the page, add the year to the **front** of the list,
-and the nav updates everywhere — no layout edits needed.
-
-For a new year of officers: move the outgoing year from
-`about/officers/index.md` into `about/officers/<year>.md`, add that year to the
-front of `officer_years`, and put the new officers on the index page.
-
-Order matters for `jsm_years`: the first entry is treated as the current
-meeting. It's where the global "JSM" button points and the only year shown
-outside the Past Years dropdown; everything after it goes in the dropdown.
-
-> **Restart the server after editing `_config.yml`.** Jekyll reads that file
-> once at startup and never reloads it, so a running `./serve.sh` will keep
-> using the old values and the nav rows will silently come out empty. Ctrl-C
-> and re-run.
-
-## Making changes
-
-Content lives in Markdown files at the repo root (`index.md`, `news.md`,
-`join.md`) and in per-year and per-topic directories (`about/`, `jsm2026/`,
-`competition/`, `ASAIP/`).
-
-The site does **not** use the `jekyll-theme-cayman` gem's appearance, despite
-`_config.yml` naming it. Both pieces are overridden locally:
-
-- `_layouts/default.html` — the page shell every page renders into
-- `assets/css/aig.css` — a plain, self-contained stylesheet (not Sass)
-
-Edit those two files to change the look; there is no theme to fight with.
-
-```sh
-git add <files>
-git commit -m "describe the change"
-git push
+```
+app/            routes — each is a thin wrapper naming a URL and a content file
+components/     SiteHeader, SectionNav, YearDropdown, ContentPage, SiteFooter
+lib/            markdown pipeline, navigation model, URL helpers
+content/        the Markdown pages
+public/         images, PDFs, and the legacy ASAIP articles
+scripts/        post-build URL fixups
 ```
 
-To get to the signup form code on Mailchimp:
-Home page → Audience → Signup Forms → Embedded Forms → Classic
+Navigation lives only in `components/`. The two rows are:
+
+- **Global row**, every page: Home · About Us · Join AIG · Student Paper
+  Competition · JSM · ASAIP · News
+- **Section row**, chosen from the page's URL: About Us gets
+  General/Officers/Charter, Competition and JSM get a year menu. Home, Join AIG,
+  News and ASAIP are single pages and get no second row.
+
+### Styling
+
+Tailwind CSS. Design tokens are declared in the `@theme` block at the top of
+[`app/globals.css`](app/globals.css); the styling for Markdown-generated content
+is the plain CSS `.prose` block below it.
+
+The two brand colours are sampled from the AIG mark. **The mark's green
+(`#9EC54C`) is only 1.99:1 against white and must never be used for text** — it
+is for rules and accents. The `-dark` variants are the text-safe versions.
+
+### Accessibility
+
+The build is checked for: a `lang` attribute, landmark elements, a skip link as
+the first focusable element, `aria-current` on the active nav item, alt text on
+images, no duplicate ids, and AA colour contrast.
+
+Dropdown menus are native `<details>`/`<summary>` elements, so they are keyboard
+operable and exposed correctly to screen readers. A small script adds the one
+thing `<details>` does not do by itself — closing when you click away or press
+Escape, returning focus to the button. Opening and closing still work with
+JavaScript disabled.
+
+Two known gaps, both inherited from the original content:
+
+1. **`public/ASAIP/Articles/*.html`** are the original hand-written article
+   pages, served unchanged. They have no `lang` attribute, no landmarks, no site
+   navigation, and two images without alt text. Converting them to Markdown
+   pages would fix all of it.
+2. **Heading levels skip** on several JSM pages (`#` followed by `####`).
+   Correcting them means renumbering headings in the Markdown, which changes how
+   those documents are structured.

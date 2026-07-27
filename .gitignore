@@ -1,13 +1,13 @@
-# Jekyll build output and caches
-_site/
-.jekyll-cache/
-.jekyll-metadata
-.sass-cache/
+# Dependencies
+node_modules/
 
-# Bundler
-Gemfile.lock
-.bundle/
-vendor/
+# Next.js build output
+.next/
+out/
+next-env.d.ts
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
 
 # macOS
 .DS_Store
