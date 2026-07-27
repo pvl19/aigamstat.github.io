@@ -20,9 +20,22 @@ export default function SiteHeader({ url }: { url: string }) {
           href={href('/')}
           className="inline-flex items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
         >
-          {/* Decorative: the group name is spelled out in the adjacent text. */}
-          <img src={href('/images/logo.png')} alt="" width={44} height={44} className="h-11 w-11 shrink-0" />
-          <span className="leading-tight">
+          {/* The original site's ASA / star / AIG lockup, cropped from the old
+              banner. Decorative: the group name is spelled out in the adjacent
+              text, so a screen reader would otherwise hear it twice. */}
+          <img
+            src={href('/images/asa-aig-lockup.png')}
+            alt=""
+            width={884}
+            height={160}
+            className="h-8 w-auto shrink-0 sm:h-10"
+          />
+          {/* Below 640px the lockup, this wordmark and the Join AIG button do
+              not fit on one line -- the wordmark ran under the button. The
+              lockup carries the branding there on its own, so the wordmark is
+              hidden visually but kept for screen readers, which is also what
+              gives the link its accessible name. */}
+          <span className="sr-only leading-tight sm:not-sr-only">
             <span className="block text-lg font-bold tracking-tight text-brand-blue-dark sm:text-xl">
               {SITE_TITLE}
             </span>

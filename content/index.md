@@ -8,5 +8,7 @@ This interest group is designed to strengthen existing collaborations and build 
 
 If you would like to stay up to date with our research and activities, [join the ASA Astrostatistics Interest Group](/join/)!
 
+<span class="accent-green">*Also, check out the Astrostatistics content at the upcoming [JSM 2026](/jsm/2026/)!*</span>
+
 <img src="/images/jsm_astrostat_meeting_2022.jpg" alt="AIG @JSM 2022" class="home-photo" />
 <p style="text-align: center;">Astrostatistics Interest Group at JSM 2022, Washington, DC </p>

@@ -100,6 +100,18 @@ build prefixes `basePath`.
 To break a line without starting a new paragraph, end it with a backslash.
 Trailing spaces also work but are invisible and editors strip them on save.
 
+Markdown has no syntax for colour, so wrap the text in a span:
+
+```markdown
+<span class="accent-green">Also, check out the sessions at [JSM 2026](/jsm/2026/)!</span>
+```
+
+`accent-green` and `accent-blue` are the only two, defined in
+[`app/globals.css`](app/globals.css). They are the `-dark` brand variants, the
+only ones safe for text — the mark's bright green is 1.99:1 on white. Use the
+class rather than an inline colour, so the palette stays changeable in one
+place. Links inside a coloured span keep the normal link colour.
+
 Handled automatically at build time, so you do not need to write them:
 
 - **`basePath`** is prefixed to every root-relative link and image.
