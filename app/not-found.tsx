@@ -23,8 +23,8 @@ export default function NotFound() {
 
       <SiteHeader url="/404" />
 
-      <main id="content" className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-        <div className="prose">
+      <main id="content" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+        <div className="content-card prose p-6 sm:p-9">
           <h1>Page not found</h1>
           <p>
             That page does not exist. It may have been moved or the link may be out of date. Use the

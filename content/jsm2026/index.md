@@ -1,8 +1,9 @@
----
+# JSM 2026: August 1-6, Boston MA
 
-### Aug 1-6, 2026
+[JSM 2026 online program](https://ww2.amstat.org/meetings/jsm/2026/onlineprogram).
+Program details current July 22, 2026. Check the live program for onsite changes.
 
-# Astrostatistics sessions at JSM
+## Astrostatistics sessions at JSM
 
 ### Astrostatistics Interest Group: Student Paper Award
 
@@ -23,3 +24,42 @@ Maximilian Autenrieth (Organizer) David van Dyk (Organizer and Chair)
 - Data-driven dust inference at mid-to-high Galactic latitudes using probabilistic machine learning
   * Matthew O'Callaghan (University of Cambridge)
 
+### Deep Space: Deep Learning in Astronomy
+
+Invited Paper Session, co-sponsored by the Astrostatistics Interest Group
+
+Mon, Aug 3, 8:30 AM - 10:20 AM
+
+Room CC-255
+
+Discussants: Mike Smith and Yang Chen
+
+- Generative solar-flare forecasting
+  * Kevin Jin
+- Causal foundation models
+  * Daniel Muthukrishna
+- Hierarchical classification
+  * V. Ashley Villar
+
+### AIG Business Meeting
+
+Mon, Aug 3, 12:30 PM - 1:30 PM
+
+Room W-Hancock
+
+Open to all. Meet the community, hear updates, and help shape AIG priorities.
+
+### More AIG and astrostatistics sessions
+
+- SPEED 1: Data Challenge, Bayesian Analysis & Statistical Applications, Part 1
+  * Sun, Aug 2, 2:00 PM - 3:50 PM, Room CC-102A; astrostatistics presentation at 3:10 PM
+- Statistical Advances Motivated by Astrophysics and Space Sciences
+  * Tue, Aug 4, 2:00 PM - 3:50 PM, Room CC-108
+- Contributed Poster Presentations: Astrostatistics Interest Group
+  * Wed, Aug 5, 10:30 AM - 12:20 PM, Hall A
+- Simulation-Based Inference: Robust Methods for Astronomy and the Broader Sciences
+  * Wed, Aug 5, 2:00 PM - 3:50 PM, Room CC-107A
+
+### AIG Community Table
+
+Table 5b

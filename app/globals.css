@@ -21,6 +21,58 @@ html {
   scroll-padding-top: 8rem;
 }
 
+/* ---------------------------------------------------------------------------
+   Site background.
+
+   `background-size: 100% auto` scales the artwork to the window width rather
+   than the content width, so it is full-bleed on any screen. It is anchored to
+   the top and never repeated: the image is a band that fades out downwards, not
+   a tile.
+
+   The artwork is a fixed layer covering the viewport, so it fills the window at
+   every scroll position rather than running out partway down a long page.
+
+   A fixed pseudo-element rather than `background-attachment: fixed`, which iOS
+   Safari sizes against the document instead of the viewport and renders wildly
+   zoomed.
+
+   `cover` keeps the aspect ratio and crops. On a window narrower than the
+   image's 2.03:1 that crop is horizontal, so the galaxy and constellation move
+   out of frame on phones and the pale centre is what shows.
+
+   The base colour sits on <html> so it paints as the canvas; the layer below is
+   z-index -1 and would otherwise be hidden behind an opaque <body> background.
+
+   The URL is supplied by app/layout.tsx as --site-bg-image so that it picks up
+   `basePath`, which stylesheets cannot read. See README.
+--------------------------------------------------------------------------- */
+html {
+  background-color: var(--color-slate-50);
+}
+
+.site-bg::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  background-image: var(--site-bg-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* The sheet the page content sits on. Keeps body text on a near-solid white
+   backdrop regardless of what the artwork is doing behind it. */
+.content-card {
+  background-color: color-mix(in srgb, white 95%, transparent);
+  border-radius: 1rem;
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 0.04),
+    0 12px 32px -12px rgb(15 23 42 / 0.12);
+  outline: 1px solid rgb(226 232 240 / 0.8);
+  outline-offset: -1px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

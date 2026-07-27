@@ -3,12 +3,19 @@ import { currentJsmYear, jsmYears, winnerYears } from '@/lib/nav';
 import { pillBase, pillCurrent, pillIdle } from './navStyles';
 import YearDropdown from './YearDropdown';
 
+/**
+ * Rendered at the top of the page content rather than as a bar under the main
+ * nav, so it reads as belonging to the page it applies to. Hence no full-width
+ * background or container of its own -- it sits inside the content card and is
+ * separated from the text by a rule.
+ */
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <nav aria-label={label} className="border-t border-slate-200 bg-white">
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-2 px-4 py-2.5 sm:px-6">
-        {children}
-      </div>
+    <nav
+      aria-label={label}
+      className="mb-7 flex flex-wrap items-center gap-2 border-b border-slate-200 pb-6"
+    >
+      {children}
     </nav>
   );
 }
@@ -28,21 +35,12 @@ function Item({ label, url, current }: { label: string; url: string; current: bo
 /**
  * The second navigation row. Which row appears is decided by the page's URL,
  * so a new page in the right folder picks up the right sub-navigation.
- * Home, Join AIG, News and ASAIP are single pages and get no row.
+ * Home, Join AIG and News are single pages and get no row.
  */
 export default function SectionNav({ url }: { url: string }) {
-  if (url.startsWith('/about')) {
-    // Past years are chosen on the Officers page itself (see PastOfficers),
-    // not from this row -- they are part of Officers rather than a fourth
-    // section alongside it.
-    return (
-      <Row label="About Us sections">
-        <Item label="General" url="/about/" current={url === '/about/'} />
-        <Item label="Officers" url="/about/officers/" current={url.startsWith('/about/officers')} />
-        <Item label="Charter" url="/about/charter.html" current={url.includes('/charter')} />
-      </Row>
-    );
-  }
+  // Officers and Charter are top-level sections in their own right, so they get
+  // no row here. Officers still offers past years, but from its own page
+  // content -- see components/PastOfficers.tsx.
 
   if (url.startsWith('/competition')) {
     const years = winnerYears();

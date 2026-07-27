@@ -38,30 +38,50 @@ export function currentJsmYear(): string {
 export const winnerYears = () => yearsFromFiles('competition/winners');
 export const officerYears = () => yearsFromFiles('about/officers');
 
-export type Section = 'home' | 'about' | 'join' | 'competition' | 'jsm' | 'asaip' | 'news';
+export type Section =
+  | 'home'
+  | 'officers'
+  | 'charter'
+  | 'join'
+  | 'competition'
+  | 'jsm'
+  | 'news'
+  | 'contact';
 
-/** Which top-level section a URL belongs to, for highlighting the nav. */
+/**
+ * Which top-level section a URL belongs to, for highlighting the nav.
+ *
+ * Officers and Charter are top-level sections but keep their original
+ * /about/... URLs so existing links and bookmarks still resolve. The nav
+ * hierarchy and the URL structure differ here deliberately.
+ */
 export function sectionFor(url: string): Section {
   if (url === '/') return 'home';
-  if (url.startsWith('/about')) return 'about';
+  if (url.startsWith('/about/officers')) return 'officers';
+  if (url.startsWith('/about/charter')) return 'charter';
   if (url.startsWith('/join')) return 'join';
   if (url.startsWith('/competition')) return 'competition';
   if (url.startsWith('/jsm')) return 'jsm';
-  if (url.startsWith('/ASAIP')) return 'asaip';
   if (url.startsWith('/news')) return 'news';
+  if (url.startsWith('/contact')) return 'contact';
   return 'home';
 }
 
 export type NavItem = { label: string; url: string; section: Section };
 
+/**
+ * The nav row. Join AIG is deliberately absent: it is the site's call to
+ * action and lives as a standalone button in the header (see SiteHeader), so
+ * the 'join' section still exists for highlighting purposes.
+ */
 export function mainNav(): NavItem[] {
   return [
     { label: 'Home', url: '/', section: 'home' },
-    { label: 'About Us', url: '/about/', section: 'about' },
-    { label: 'Join AIG', url: '/join.html', section: 'join' },
+    { label: 'JSM 2026', url: `/jsm${currentJsmYear()}/`, section: 'jsm' },
+    { label: 'Officers', url: '/about/officers/', section: 'officers' },
+    { label: 'Charter', url: '/about/charter.html', section: 'charter' },
     { label: 'Student Paper Competition', url: '/competition/', section: 'competition' },
-    { label: 'JSM', url: `/jsm${currentJsmYear()}/`, section: 'jsm' },
-    { label: 'ASAIP', url: '/ASAIP/', section: 'asaip' },
     { label: 'News', url: '/news.html', section: 'news' },
+    { label: 'Contact', url: '/contact.html', section: 'contact' },
   ];
 }

@@ -53,8 +53,9 @@ const config = {
  * untouched, so those same dynamic routes still receive "2018.html" as the
  * param and still fail. Redirecting strips the extension before routing.
  *
- * Files that genuinely exist on disk -- the legacy ASAIP articles in public/ --
- * are excluded, or this would redirect them away from themselves.
+ * There are no .html files under public/ today. If one is ever added it must be
+ * excluded here -- otherwise this redirects it away from itself and it becomes
+ * unreachable in development.
  */
 if (isDev) {
   /**
@@ -70,17 +71,17 @@ if (isDev) {
   config.skipTrailingSlashRedirect = true;
 
   config.redirects = async () => [
-    // Must precede the rule below, or /ASAIP/index.html becomes /ASAIP/index.
-    // scripts/postbuild.mjs creates these index files, so content can link to
-    // ./ASAIP/index.html and ../../jsm2022/index.html -- correct once
-    // published, nonexistent in dev.
+    // Must precede the rule below, or /jsm2022/index.html becomes
+    // /jsm2022/index. scripts/postbuild.mjs creates these index files, so
+    // content can link to ../../jsm2022/index.html -- correct once published,
+    // nonexistent in dev.
     {
       source: '/:path*/index.html',
       destination: '/:path*/',
       permanent: false,
     },
     {
-      source: '/:path((?!ASAIP/Articles/).*)\\.html',
+      source: '/:path(.*)\\.html',
       destination: '/:path',
       permanent: false,
     },

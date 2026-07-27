@@ -1,18 +1,21 @@
 import { href, SITE_TAGLINE, SITE_TITLE } from '@/lib/site';
 import { mainNav, sectionFor } from '@/lib/nav';
-import SectionNav from './SectionNav';
 
 /**
  * The old site's header was a single wide bitmap with the group name baked
  * into it, which could not reflow on small screens and was invisible to screen
  * readers. The mark is now an image and the wordmark is real text.
+ *
+ * The section (second-level) navigation is deliberately not here -- it belongs
+ * to the page it describes and is rendered at the top of the content instead.
+ * See components/ContentPage.tsx.
  */
 export default function SiteHeader({ url }: { url: string }) {
   const active = sectionFor(url);
 
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="mx-auto max-w-5xl px-4 py-4 sm:px-6">
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <a
           href={href('/')}
           className="inline-flex items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
@@ -27,6 +30,20 @@ export default function SiteHeader({ url }: { url: string }) {
               {SITE_TAGLINE}
             </span>
           </span>
+        </a>
+
+        {/* Primary call to action. Kept out of the nav row and given a solid
+            fill on every page, so it reads as an action rather than one
+            destination among several. Green rather than the blue used for the
+            current nav item, so the two are never confused. */}
+        <a
+          href={href('/join.html')}
+          aria-current={active === 'join' ? 'page' : undefined}
+          className="shrink-0 rounded-lg bg-brand-green-dark px-4 py-2.5 text-sm font-semibold text-white
+                     shadow-sm transition hover:bg-brand-green-dark/90
+                     focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+        >
+          Join AIG
         </a>
       </div>
 
@@ -53,8 +70,6 @@ export default function SiteHeader({ url }: { url: string }) {
           })}
         </div>
       </nav>
-
-      <SectionNav url={url} />
     </header>
   );
 }

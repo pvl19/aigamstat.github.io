@@ -1,9 +1,3 @@
----
-
-Past events: [JSM 2023](https://astrostat.org/jsm2023/index.html), [JSM 2022](https://astrostat.org/jsm2022/index.html), [JSM 2021](https://astrostat.org/jsm2021/index.html), [JSM 2020](https://astrostat.org/jsm2020/index.html)
-
----
-
 ### Aug 3-8, 2024
 
 # Astrostatistics sessions at JSM

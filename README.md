@@ -47,7 +47,7 @@ on links that are perfectly correct in production:
 | Written in content | Published | Bare dev server |
 |---|---|---|
 | `./join.html` | `/join.html` | route is `/join` — **500** |
-| `./ASAIP/index.html` | `/ASAIP/index.html` | created by postbuild — **404** |
+| `../../jsm2022/index.html` | `/jsm2022/index.html` | created by postbuild — **404** |
 | `./images/photo.jpg` on `/about/` | resolves against `/about/` | dev serves `/about`, so it resolves against `/` — **404** |
 
 The last one is the subtlest: with the trailing slash stripped, a browser treats
@@ -104,7 +104,7 @@ Every page is a Markdown file under `content/`, laid out to mirror its URL:
 |---|---|
 | `/` | `content/index.md` |
 | `/news.html` | `content/news.md` |
-| `/about/` | `content/about/index.md` |
+| `/contact.html` | `content/contact.md` |
 | `/about/charter.html` | `content/about/charter.md` |
 | `/about/officers/2021.html` | `content/about/officers/2021.md` |
 | `/competition/winners/2022.html` | `content/competition/winners/2022.md` |
@@ -173,10 +173,14 @@ resolve one level too high and the site will come out unstyled.
 The site keeps the exact URLs it had under Jekyll, including `.html` endings and
 directory-style paths, so existing links and bookmarks still work.
 
-Next normally exports the route `/about` as `about.html`, but the canonical URL
-is `/about/`. [`scripts/postbuild.mjs`](scripts/postbuild.mjs) moves those files
-into place after the build, deriving the list from every `content/*/index.md`.
-Nothing to maintain by hand.
+Next normally exports the route `/competition` as `competition.html`, but the
+canonical URL is `/competition/`. [`scripts/postbuild.mjs`](scripts/postbuild.mjs)
+moves those files into place after the build, deriving the list from every
+`content/*/index.md`. Nothing to maintain by hand.
+
+Officers and Charter are top-level items in the navigation but keep their
+original `/about/...` URLs, so links and bookmarks made before the restructure
+still resolve. The nav hierarchy and the URL structure differ there on purpose.
 
 Navigation uses plain `<a href>` rather than `next/link`, so every click is a
 real page load at the exact published path. On a site this size the difference
@@ -191,17 +195,20 @@ app/            routes — each is a thin wrapper naming a URL and a content fil
 components/     SiteHeader, SectionNav, YearDropdown, ContentPage, SiteFooter
 lib/            markdown pipeline, navigation model, URL helpers
 content/        the Markdown pages
-public/         images, PDFs, and the legacy ASAIP articles
+public/         images and PDFs
 scripts/        post-build URL fixups
 ```
 
-Navigation lives only in `components/`. The two rows are:
+Navigation lives only in `components/`:
 
-- **Global row**, every page: Home · About Us · Join AIG · Student Paper
-  Competition · JSM · ASAIP · News
-- **Section row**, chosen from the page's URL: About Us gets
-  General/Officers/Charter, Competition and JSM get a year menu. Home, Join AIG,
-  News and ASAIP are single pages and get no second row.
+- **Global row**, every page: Home · Officers · Charter · Student Paper
+  Competition · JSM · News · Contact.
+- **Join AIG** is not in that row. It is the site's call to action, so it sits
+  as a solid button in the header on every page (`SiteHeader`).
+- **Section row**, chosen from the page's URL: Competition and JSM each get a
+  year menu. It renders at the top of the page content rather than as a third
+  bar in the header, so it reads as belonging to the page. Every other section
+  is a single page and gets no row.
 
 ### Styling
 
@@ -225,12 +232,6 @@ thing `<details>` does not do by itself — closing when you click away or press
 Escape, returning focus to the button. Opening and closing still work with
 JavaScript disabled.
 
-Two known gaps, both inherited from the original content:
-
-1. **`public/ASAIP/Articles/*.html`** are the original hand-written article
-   pages, served unchanged. They have no `lang` attribute, no landmarks, no site
-   navigation, and two images without alt text. Converting them to Markdown
-   pages would fix all of it.
-2. **Heading levels skip** on several JSM pages (`#` followed by `####`).
-   Correcting them means renumbering headings in the Markdown, which changes how
-   those documents are structured.
+One known gap, inherited from the original content: **heading levels skip** on
+several JSM pages (`#` followed by `####`). Correcting them means renumbering
+headings in the Markdown, which changes how those documents are structured.

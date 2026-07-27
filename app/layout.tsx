@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { SITE_TAGLINE, SITE_TITLE } from '@/lib/site';
+import { href, SITE_TAGLINE, SITE_TITLE } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: SITE_TITLE,
@@ -10,7 +10,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-US">
-      <body className="bg-white text-slate-700 antialiased">{children}</body>
+      {/* The background image URL is set here rather than in globals.css because
+          it has to carry `basePath`, which a stylesheet cannot read. */}
+      <body
+        className="site-bg text-slate-700 antialiased"
+        style={
+          {
+            '--site-bg-image': `url('${href('/images/AIG_bg_2.png')}')`,
+          } as React.CSSProperties
+        }
+      >
+        {children}
+      </body>
     </html>
   );
 }

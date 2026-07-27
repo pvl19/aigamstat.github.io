@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import SiteHeader from './SiteHeader';
+import SectionNav from './SectionNav';
 import SiteFooter from './SiteFooter';
 import { loadPage } from '@/lib/markdown';
 import { SITE_TITLE } from '@/lib/site';
@@ -35,10 +36,15 @@ export default async function ContentPage({ url, file, children }: Props) {
 
       <SiteHeader url={url} />
 
-      <main id="content" className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-        {children}
-        {/* Content is Markdown rendered to HTML at build time; no user input. */}
-        <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+      {/* max-w-5xl matches the header, so the card's edges line up with the
+          wordmark and nav row above it. */}
+      <main id="content" className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+        <div className="content-card p-6 sm:p-9">
+          <SectionNav url={url} />
+          {children}
+          {/* Content is Markdown rendered to HTML at build time; no user input. */}
+          <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
       </main>
 
       <SiteFooter />

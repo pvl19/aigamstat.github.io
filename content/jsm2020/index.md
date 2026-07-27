@@ -1,5 +1,3 @@
----
-
 [JSM 2020](https://ww2.amstat.org/meetings/jsm/2020/index.cfm)
 
 # Astrostatistics sessions at JSM 2020

@@ -1,7 +1,7 @@
 import ContentPage, { metadataFor } from '@/components/ContentPage';
 
-const URL = '/ASAIP/';
-const FILE = 'ASAIP/index.md';
+const URL = '/contact.html';
+const FILE = 'contact.md';
 
 export const generateMetadata = () => metadataFor(FILE);
 export default function Page() {
