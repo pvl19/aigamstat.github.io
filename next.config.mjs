@@ -5,11 +5,13 @@
  *   served from a custom domain or <account>.github.io  ->  '' (empty)
  *   served at <account>.github.io/<repo>/               ->  '/<repo>'
  *
- * Set below for a project-page deployment. Serving from the root with this
- * non-empty resolves every asset one level too high, and the site loads
- * unstyled. See README.md.
+ * Empty because aigamstat/aigamstat.github.io is an organisation page: the repo
+ * name matches the org, so GitHub Pages serves it from the root, and it is
+ * reached through the custom domain in public/CNAME. Setting this non-empty
+ * while serving from the root resolves every asset one level too high and the
+ * site loads unstyled. See README.md.
  */
-const basePath = '/aigamstat.github.io';
+const basePath = '';
 
 /** @type {import('next').NextConfig} */
 export default {
@@ -31,18 +33,6 @@ export default {
    * since those resolve against a directory.
    */
   trailingSlash: true,
-
-  /**
-   * Only affects `next dev`; the export writes finished files and never
-   * redirects.
-   *
-   * With both `basePath` and `trailingSlash` set, the dev server bounces the
-   * base root between `/<basePath>/` and `/<basePath>` forever, so the home
-   * page cannot be opened locally at all. Turning its trailing-slash redirect
-   * off stops the loop. Every link on the site already ends in a slash, so
-   * there is nothing left for that redirect to do.
-   */
-  skipTrailingSlashRedirect: true,
 
   // The Next image optimiser needs a server; static export can't use it.
   images: { unoptimized: true },

@@ -20,10 +20,8 @@ Then open **<http://localhost:3000>**.
 
 Edits to anything under `content/` appear immediately — no restart, no rebuild.
 
-> **If `basePath` is set** in [`next.config.mjs`](next.config.mjs), the dev
-> server mirrors it so local and published paths match — open
-> `http://localhost:3000/<basePath>` instead, and the bare root will 404. See
-> *The `basePath` setting* below.
+Local URLs match the published ones exactly, so `http://localhost:3000/officers/`
+is what `astrostat.org/officers/` will be.
 
 To reproduce exactly what gets published:
 
@@ -199,6 +197,12 @@ deployment, for example — must set it, or every stylesheet, image and link wil
 resolve one level too high and the site will come out unstyled.
 
 **This is the only value that needs changing when the site moves.**
+
+One caveat if you ever set it non-empty to test a fork: `basePath` together with
+`trailingSlash` makes the dev server bounce `/<basePath>/` against `/<basePath>`
+forever, so the home page will not open locally. Adding
+`skipTrailingSlashRedirect: true` to the config stops it. That is not needed here
+because `basePath` is empty.
 
 ### URL structure
 
