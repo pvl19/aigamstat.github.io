@@ -86,7 +86,6 @@ Every page is a Markdown file under `content/`, laid out to mirror its URL:
 |---|---|
 | `/` | `content/index.md` |
 | `/news/` | `content/news.md` |
-| `/contact/` | `content/contact.md` |
 | `/charter/` | `content/charter.md` |
 | `/officers/2021/` | `content/officers/2021.md` |
 | `/competition/winners/2022/` | `content/competition/winners/2022.md` |
@@ -210,7 +209,7 @@ the navigation section it belongs to:
 /                        /jsm/2026/           /officers/
 /join/                   /jsm/2024/           /officers/2021/
 /news/                   /competition/        /charter/
-/contact/                /competition/finalists/
+                         /competition/finalists/
                          /competition/winners/2024/
 ```
 
@@ -255,7 +254,7 @@ Year-based sections are always a folder of `YYYY.md` files, which is why
 Navigation lives only in `components/`:
 
 - **Global row**, every page: Home · Officers · Charter · Student Paper
-  Competition · JSM · News · Contact.
+  Competition · JSM · News.
 - **Join AIG** is not in that row. It is the site's call to action, so it sits
   as a solid button in the header on every page (`SiteHeader`).
 - **Section row**, chosen from the page's URL: Competition and JSM each get a

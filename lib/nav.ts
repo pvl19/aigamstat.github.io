@@ -40,8 +40,7 @@ export type Section =
   | 'join'
   | 'competition'
   | 'jsm'
-  | 'news'
-  | 'contact';
+  | 'news';
 
 /**
  * Which top-level section a URL belongs to, for highlighting the nav. Each
@@ -55,7 +54,6 @@ export function sectionFor(url: string): Section {
   if (url.startsWith('/competition')) return 'competition';
   if (url.startsWith('/jsm')) return 'jsm';
   if (url.startsWith('/news')) return 'news';
-  if (url.startsWith('/contact')) return 'contact';
   return 'home';
 }
 
@@ -78,6 +76,5 @@ export function mainNav(): NavItem[] {
     // tab opens on whatever that row shows first.
     { label: 'Student Paper Competition', url: '/competition/finalists/', section: 'competition' },
     { label: 'News', url: '/news/', section: 'news' },
-    { label: 'Contact', url: '/contact/', section: 'contact' },
   ];
 }
